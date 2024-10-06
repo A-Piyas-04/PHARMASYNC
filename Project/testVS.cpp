@@ -3,16 +3,14 @@
 
 using namespace std;
 
-
 void myStrcpy(char* destination, const char* source) {
     int i = 0;
     while (source[i] != '\0') {
         destination[i] = source[i];
         i++;
     }
-    destination[i] = '\0'; // Null-terminate the destination string
+    destination[i] = '\0';
 }
-
 
 int myStrcmp(const char* str1, const char* str2) {
     int i = 0;
@@ -22,9 +20,8 @@ int myStrcmp(const char* str1, const char* str2) {
         }
         i++;
     }
-    return str1[i] - str2[i]; // Compare based on the length
+    return str1[i] - str2[i];
 }
-
 
 int myStrlen(const char* str) {
     int length = 0;
@@ -34,13 +31,12 @@ int myStrlen(const char* str) {
     return length;
 }
 
-
 void padString(char* str, int width) {
     int len = myStrlen(str);
     for (int i = len; i < width; i++) {
-        str[i] = ' '; // Pad with spaces
+        str[i] = ' ';
     }
-    str[width] = '\0'; // Null-terminate the padded s
+    str[width] = '\0';
 }
 
 
@@ -51,12 +47,11 @@ private:
     char supplier[50];
     float price;
     int quantity;
-    char expiryDate[15];
+    char expiryDate[15]; // Format: YYYY-MM-DD
 
 public:
     Medicine() {}
 
-   
     Medicine(const char* n, const char* gName, const char* supp, float pr, int qty, const char* exp) {
         myStrcpy(name, n);
         myStrcpy(genericName, gName);
@@ -66,12 +61,12 @@ public:
         myStrcpy(expiryDate, exp);
     }
 
-   
     const char* getName() { return name; }
     const char* getGenericName() { return genericName; }
+    const char* getExpiryDate() { return expiryDate; }
     float getPrice() { return price; }
+    int getQuantity() { return quantity; }
 
- 
     void display() {
         char namePad[50];
         char genericNamePad[50];
@@ -87,10 +82,14 @@ public:
         cout << "| " << namePad 
              << "| " << genericNamePad 
              << "| " << supplierPad 
-             << "   | " << price 
-             << "       | " << quantity 
-             << "      | " << expiryDate 
+             << "| " << price 
+             << "| " << quantity 
+             << "| " << expiryDate 
              << "|" << endl;
+    }
+
+    int compareExpiryDate(const char* otherExpiry) {
+        return myStrcmp(expiryDate, otherExpiry);
     }
 };
 
@@ -105,7 +104,6 @@ public:
         medicineCount = 0;
     }
 
- 
     void loadData(const char* filename) {
         FILE* file = fopen(filename, "r");
         if (!file) {
@@ -123,19 +121,17 @@ public:
         fclose(file);
     }
 
- 
     void printHeader() {
         cout << "+-----------------+-----------------+----------------------+----------+----------+-------------+" << endl;
         cout << "| Name            | Generic Name    | Supplier             | Price    | Quantity | Expiry Date |" << endl;
         cout << "+-----------------+-----------------+----------------------+----------+----------+-------------+" << endl;
     }
 
-
     void printFooter() {
         cout << "+-----------------+-----------------+----------------------+----------+----------+-------------+" << endl;
     }
 
- 
+
     void searchMedicine(const char* searchTerm) {
         printHeader();
         for (int i = 0; i < medicineCount; i++) {
@@ -146,34 +142,43 @@ public:
         printFooter();
     }
 
-
     void swap(Medicine &a, Medicine &b) {
         Medicine temp = a;
         a = b;
         b = temp;
     }
 
-
-    void sortMedicines(bool byPrice, bool ascending) {
+    void sortMedicines(int sortBy, bool ascending) {
         for (int i = 0; i < medicineCount; i++) {
             for (int j = i + 1; j < medicineCount; j++) {
-                if (byPrice) {
-                    if ((ascending && medicines[i].getPrice() > medicines[j].getPrice()) ||
-                        (!ascending && medicines[i].getPrice() < medicines[j].getPrice())) {
-                        swap(medicines[i], medicines[j]);
-                    }
-                } else {
-                    if ((ascending && myStrcmp(medicines[i].getName(), medicines[j].getName()) > 0) ||
-                        (!ascending && myStrcmp(medicines[i].getName(), medicines[j].getName()) < 0)) {
-                        swap(medicines[i], medicines[j]);
-                    }
+                bool condition = false;
+                switch (sortBy) {
+                    case 1:
+                        condition = (ascending && myStrcmp(medicines[i].getName(), medicines[j].getName()) > 0) ||
+                                    (!ascending && myStrcmp(medicines[i].getName(), medicines[j].getName()) < 0);
+                        break;
+                    case 2:
+                        condition = (ascending && myStrcmp(medicines[i].getGenericName(), medicines[j].getGenericName()) > 0) ||
+                                    (!ascending && myStrcmp(medicines[i].getGenericName(), medicines[j].getGenericName()) < 0);
+                        break;
+                    case 3:
+                        condition = (ascending && medicines[i].compareExpiryDate(medicines[j].getExpiryDate()) > 0) ||
+                                    (!ascending && medicines[i].compareExpiryDate(medicines[j].getExpiryDate()) < 0);
+                        break;
+                    case 4:
+                        condition = (ascending && medicines[i].getQuantity() > medicines[j].getQuantity()) ||
+                                    (!ascending && medicines[i].getQuantity() < medicines[j].getQuantity());
+                        break;
+                }
+                if (condition) {
+                    swap(medicines[i], medicines[j]);
                 }
             }
         }
     }
 
-
-    void filterMedicines(float minPrice, float maxPrice) {
+ 
+    void filterByPrice(float minPrice, float maxPrice) {
         printHeader();
         for (int i = 0; i < medicineCount; i++) {
             if (medicines[i].getPrice() >= minPrice && medicines[i].getPrice() <= maxPrice) {
@@ -183,6 +188,16 @@ public:
         printFooter();
     }
 
+
+    void filterByQuantity(int minQty, int maxQty) {
+        printHeader();
+        for (int i = 0; i < medicineCount; i++) {
+            if (medicines[i].getQuantity() >= minQty && medicines[i].getQuantity() <= maxQty) {
+                medicines[i].display();
+            }
+        }
+        printFooter();
+    }
 
     void displayAllMedicines() {
         printHeader();
@@ -200,21 +215,31 @@ int main() {
 
     pharmacy.loadData("medicine_data.txt");
 
-  
+
     cout << "\nAll Medicines:\n";
     pharmacy.displayAllMedicines();
 
-  
+
     cout << "\nSearch Results for 'Paracetamol':\n";
     pharmacy.searchMedicine("Paracetamol");
 
-  
-    cout << "\nMedicines sorted by Price (Ascending):\n";
-    pharmacy.sortMedicines(true, true);
+    cout << "\nMedicines sorted by Name (Ascending):\n";
+    pharmacy.sortMedicines(1, true);
     pharmacy.displayAllMedicines();
-  
+
+    cout << "\nMedicines sorted by Expiry Date (Ascending):\n";
+    pharmacy.sortMedicines(3, true);
+    pharmacy.displayAllMedicines();
+
+    cout << "\nMedicines sorted by Quantity (Descending):\n";
+    pharmacy.sortMedicines(4, false);
+    pharmacy.displayAllMedicines();
+
     cout << "\nMedicines with price between 10 and 50:\n";
-    pharmacy.filterMedicines(10, 50);
+    pharmacy.filterByPrice(10, 50);
+
+    cout << "\nMedicines with quantity between 50 and 150:\n";
+    pharmacy.filterByQuantity(50, 150);
 
     return 0;
 }
