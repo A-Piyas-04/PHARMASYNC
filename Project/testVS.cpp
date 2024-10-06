@@ -40,6 +40,37 @@ void padString(char* str, int width) {
 }
 
 
+void toLowerCase(char* str) {
+    int i = 0;
+    while (str[i] != '\0') {
+        if (str[i] >= 'A' && str[i] <= 'Z') {
+            str[i] = str[i] + ('a' - 'A');
+        }
+        i++;
+    }
+}
+
+
+void trim(char* str) {
+    int start = 0, end = myStrlen(str) - 1;
+
+    while (str[start] == ' ') {
+        start++;
+    }
+
+    while (end >= start && str[end] == ' ') {
+        end--;
+    }
+
+    int i = 0;
+    while (start <= end) {
+        str[i++] = str[start++];
+    }
+    str[i] = '\0'; 
+}
+
+
+
 class Medicine {
 private:
     char name[50];
@@ -132,15 +163,48 @@ public:
     }
 
 
-    void searchMedicine(const char* searchTerm) {
-        printHeader();
-        for (int i = 0; i < medicineCount; i++) {
-            if (myStrcmp(medicines[i].getName(), searchTerm) == 0 || myStrcmp(medicines[i].getGenericName(), searchTerm) == 0) {
-                medicines[i].display();
-            }
+
+
+
+
+
+void searchMedicine(const char* searchTerm) {
+    char searchLower[50];
+    myStrcpy(searchLower, searchTerm);
+    trim(searchLower); 
+    toLowerCase(searchLower); 
+    bool found = false; 
+
+    printHeader();
+    for (int i = 0; i < medicineCount; i++) {
+      
+        char medicineName[50];
+        char genericName[50];
+        myStrcpy(medicineName, medicines[i].getName());
+        myStrcpy(genericName, medicines[i].getGenericName());
+
+        toLowerCase(medicineName);
+        toLowerCase(genericName);
+        trim(medicineName);
+        trim(genericName);
+
+        if (myStrcmp(medicineName, searchLower) == 0 || myStrcmp(genericName, searchLower) == 0) {
+            medicines[i].display();
+            found = true;
         }
-        printFooter();
     }
+    if (!found) {
+        cout << "| No medicines found matching '" << searchTerm << "' |" << endl;
+    }
+    printFooter();
+}
+
+
+
+
+
+
+
 
     void swap(Medicine &a, Medicine &b) {
         Medicine temp = a;
