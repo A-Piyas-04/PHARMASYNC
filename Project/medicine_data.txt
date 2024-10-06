@@ -1,0 +1,7 @@
+Paracetamol Acetaminophen ABC_Corp 20.00 50 2024-10-10
+Ibuprofen Ibuprofen XYZ_Suppliers 15.00 100 2024-11-05
+Amoxicillin Amoxicillin ABC_Corp 25.00 75 2024-09-20
+Aspirin Aspirin DEF_Medicals 10.00 200 2024-12-01
+VitaminC AscorbicAcid XYZ_Suppliers 30.00 120 2023-12-31
+Metformin Metformin ABC_Corp 5.00 90 2025-03-15
+
