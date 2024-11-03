@@ -1,4 +1,5 @@
- #include <iostream>
+#include <iostream>
+
 #define MAX_MEDICINES 100
 
 using namespace std;
@@ -31,7 +32,6 @@ int myStrlen(const char* str) {
     return length;
 }
 
-
 void padString(char* str, int width) {
     int len = myStrlen(str);
     for (int i = len; i < width; i++) {
@@ -39,7 +39,6 @@ void padString(char* str, int width) {
     }
     str[width] = '\0';
 }
-
 
 void intToStr(int num, char* str, int width) {
     int i = 0, temp = num;
@@ -61,7 +60,6 @@ void intToStr(int num, char* str, int width) {
     str[j] = '\0';
 }
 
-
 void toLowerCase(char* str) {
     int i = 0;
     while (str[i] != '\0') {
@@ -72,26 +70,20 @@ void toLowerCase(char* str) {
     }
 }
 
-
 void trim(char* str) {
     int start = 0, end = myStrlen(str) - 1;
-
     while (str[start] == ' ') {
         start++;
     }
-
     while (end >= start && str[end] == ' ') {
         end--;
     }
-
     int i = 0;
     while (start <= end) {
         str[i++] = str[start++];
     }
     str[i] = '\0'; 
 }
-
-
 
 class Medicine {
 private:
@@ -145,7 +137,6 @@ int compareExpiryDate(const string& otherExpiryDate) const {
     
 };
 
-
 struct Node {
     Medicine data;
     Node* next;
@@ -169,8 +160,7 @@ public:
         }
     }
 
-
-     void loadData(const char* filename) {
+    void loadData(const char* filename) {
         FILE* file = fopen(filename, "r");
         if (!file) {
             cout << "Error opening file!" << endl;
@@ -187,7 +177,7 @@ public:
         }
         fclose(file);
     }
-    
+
     void addMedicine(const Medicine& med) {
         Node* newNode = new Node(med);
         if (!head) {
@@ -201,7 +191,6 @@ public:
         }
         medicineCount++;
     }
-    
 
     void printHeader() {
         cout << "+----------------+----------------+---------------------+----------+----------+-------------+" << endl;
@@ -293,6 +282,7 @@ void sortMedicines(int sortBy, bool ascending) {
     }
 }
 
+
 void filterByQuantity(int minQty, int maxQty) {
     printHeader();
     Node* current = head;
@@ -310,11 +300,8 @@ void filterByQuantity(int minQty, int maxQty) {
     printFooter();
 }
 
-
-
-
-
-    void addMedicineToFile(const char* filename) {
+void addMedicineToFile(const char* filename) {
+        // Prompt for medicine details
         char name[50], genericName[50], supplier[50], expiryDate[15];
         float price;
         int quantity;
@@ -333,7 +320,7 @@ void filterByQuantity(int minQty, int maxQty) {
         cout << "Enter expiry date (YYYY-MM-DD): ";
         cin >> expiryDate;
 
-     
+        // Append the new medicine information to the file
         FILE* file = fopen(filename, "a");
         if (!file) {
             cout << "Error opening file for writing!" << endl;
@@ -342,6 +329,7 @@ void filterByQuantity(int minQty, int maxQty) {
         fprintf(file, "%s %s %s %.2f %d %s\n", name, genericName, supplier, price, quantity, expiryDate);
         fclose(file);
 
+        // Add the new medicine to the in-memory list as well
         Medicine newMedicine(name, genericName, supplier, price, quantity, expiryDate);
         addMedicine(newMedicine);
         
@@ -349,19 +337,18 @@ void filterByQuantity(int minQty, int maxQty) {
     }
 
 
-    void clearMedicines() {
+void clearMedicines() {
     Node* current = head;
     while (current) {
         Node* temp = current;
         current = current->next;
         delete temp;
     }
-    head = nullptr; 
-    medicineCount = 0;
-    } 
+    head = nullptr; // Reset head to nullptr
+    medicineCount = 0; // Reset medicine count
+}
 
-
-    void deleteMedicine(const char* medicineName) {
+void deleteMedicine(const char* medicineName) {
     
     Node* current = head;
 
@@ -422,12 +409,13 @@ void filterByQuantity(int minQty, int maxQty) {
      }
  }
 
+
+
 };
 
 int main() {
     Pharmacy pharmacy;
     pharmacy.loadData("medicine_data.txt");
-
 
     cout << "\nAll Medicines:\n";
     pharmacy.displayAllMedicines();
@@ -435,6 +423,13 @@ int main() {
 
     cout << "\nSearch Results for 'Paracetamol':\n";
     pharmacy.searchMedicine("Paracetamol");
+
+    cout << "\nSearch Results for 'Amoxicillin':\n";
+    pharmacy.searchMedicine("Amoxicillin");
+
+    cout << "\nSearch Results for 'Exium':\n";
+    pharmacy.searchMedicine("Exium");
+
 
     cout << "\nMedicines sorted by Name (Ascending):\n";
     pharmacy.sortMedicines(1, true);
@@ -451,17 +446,50 @@ int main() {
     cout << "\nMedicines with quantity between 50 and 150:\n";
     pharmacy.filterByQuantity(50, 150);
 
-           cout << "\n\n\n";
 
-    cout << "\nAdding a new medicine:\n";
-    pharmacy.addMedicineToFile("medicine_data.txt"); 
 
-    pharmacy.loadData("medicine_data.txt");
+    // Add,delete & Display updated list
+
+    while(1){
+    cout << "\n**\n**\n**\n";
+    cout << "1. Add a medicine" << endl;
+    cout << "2. Delete a medicine" << endl;
+    cout << "3. Exit" << endl;
+    cout << "Choose: ";
     
-    cout << "\nUpdated Medicines:\n";
-    pharmacy.displayAllMedicines();
+    int choice;
+    cin >> choice;
+
+    if (choice == 1) {
+        cout << "Adding a new medicine:" << endl;
+
+        pharmacy.addMedicineToFile("medicine_data.txt");
+
+        pharmacy.loadData("medicine_data.txt");
+
+        cout << "Updated Medicines:" << endl;
+        pharmacy.displayAllMedicines();
+
+
+    }
+     else if (choice == 2) {
+        cout << "Enter the name of the medicine to delete: ";
+        char medName[50];
+        cin.ignore(); // Clear the buffer
+        cin.getline(medName, 50);
+
+        pharmacy.deleteMedicine(medName);
+        cout << "\nUpdated Medicines:\n";
+        pharmacy.displayAllMedicines();
+
+    } 
+    else {
+        break;
+    }
+   
+  }
+
+    system("pause");
     
-    system("pause");    
     return 0;
-
 }
