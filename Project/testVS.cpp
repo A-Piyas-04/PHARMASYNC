@@ -169,7 +169,24 @@ public:
     }
 
 
+     void loadData(const char* filename) {
+        FILE* file = fopen(filename, "r");
+        if (!file) {
+            cout << "Error opening file!" << endl;
+            return;
+        }
 
+        char name[50], genericName[50], supplier[50], expiryDate[15];
+        float price;
+        int quantity;
+
+        while (fscanf(file, "%s %s %s %f %d %s", name, genericName, supplier, &price, &quantity, expiryDate) != EOF) {
+            Medicine med(name, genericName, supplier, price, quantity, expiryDate);
+            addMedicine(med);
+        }
+        fclose(file);
+    }
+    
 
     void printHeader() {
         cout << "+----------------+----------------+---------------------+----------+----------+-------------+" << endl;
