@@ -1,4 +1,4 @@
-#include <iostream>
+ #include <iostream>
 #define MAX_MEDICINES 100
 
 using namespace std;
@@ -269,15 +269,6 @@ void searchMedicine(const char* searchTerm) {
     }
 
  
-    void filterByPrice(float minPrice, float maxPrice) {
-        printHeader();
-        for (int i = 0; i < medicineCount; i++) {
-            if (medicines[i].getPrice() >= minPrice && medicines[i].getPrice() <= maxPrice) {
-                medicines[i].display();
-            }
-        }
-        printFooter();
-    }
 
 
     void filterByQuantity(int minQty, int maxQty) {
@@ -325,9 +316,6 @@ int main() {
     cout << "\nMedicines sorted by Quantity (Descending):\n";
     pharmacy.sortMedicines(4, false);
     pharmacy.displayAllMedicines();
-
-    cout << "\nMedicines with price between 10 and 50:\n";
-    pharmacy.filterByPrice(10, 50);
 
     cout << "\nMedicines with quantity between 50 and 150:\n";
     pharmacy.filterByQuantity(50, 150);
