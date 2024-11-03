@@ -311,6 +311,44 @@ void filterByQuantity(int minQty, int maxQty) {
 
 
 
+
+
+    void addMedicineToFile(const char* filename) {
+        char name[50], genericName[50], supplier[50], expiryDate[15];
+        float price;
+        int quantity;
+
+        cout << "Enter medicine name: ";
+        cin.ignore();
+        cin.getline(name, 50);
+        cout << "Enter generic name: ";
+        cin.getline(genericName, 50);
+        cout << "Enter supplier: ";
+        cin.getline(supplier, 50);
+        cout << "Enter price: ";
+        cin >> price;
+        cout << "Enter quantity: ";
+        cin >> quantity;
+        cout << "Enter expiry date (YYYY-MM-DD): ";
+        cin >> expiryDate;
+
+     
+        FILE* file = fopen(filename, "a");
+        if (!file) {
+            cout << "Error opening file for writing!" << endl;
+            return;
+        }
+        fprintf(file, "%s %s %s %.2f %d %s\n", name, genericName, supplier, price, quantity, expiryDate);
+        fclose(file);
+
+        Medicine newMedicine(name, genericName, supplier, price, quantity, expiryDate);
+        addMedicine(newMedicine);
+        
+        cout << "Medicine added successfully!" << endl;
+    }
+
+
+
 };
 
 int main() {
