@@ -121,34 +121,27 @@ public:
     int getQuantity() { return quantity; }
 
     void display() {
-   char namePad[50];
-    char genericNamePad[50];
-    char supplierPad[50];
-    char priceStr[10];
-    char quantityStr[10];
-    char expiryDatePad[20];
+        char namePad[50], genericNamePad[50], supplierPad[50], priceStr[10], quantityStr[10];
+        padString(name, 15);
+        padString(genericName, 15);
+        padString(supplier, 20);
+        intToStr(price, priceStr, 8);
+        intToStr(quantity, quantityStr, 9);
+        padString(expiryDate, 12);
+        cout << "| " << name << "| " << genericName << "| " << supplier << "| " << priceStr << "| " << quantityStr << "| " << expiryDate << "|" << endl;
+    }
 
-    padString(name, 15);
-    padString(genericName, 15);
-    padString(supplier, 20);
-    
-    intToStr(price, priceStr, 8);       
-    intToStr(quantity, quantityStr,9); 
 
-    padString(expiryDate, 12);
 
-    cout << "| " << name 
-         << "| " << genericName 
-         << "| " << supplier 
-         << "| " << priceStr 
-         << "| " << quantityStr 
-         << "| " << expiryDate 
-         << "|" << endl;
+int compareExpiryDate(const string& otherExpiryDate) const {
+
+    if (expiryDate == otherExpiryDate) {
+        return 0;
+    }
+    return (expiryDate > otherExpiryDate) ? 1 : -1;
 }
 
-    int compareExpiryDate(const char* otherExpiry) {
-        return myStrcmp(expiryDate, otherExpiry);
-    }
+    
 };
 
 
