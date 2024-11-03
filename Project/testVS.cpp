@@ -153,30 +153,23 @@ struct Node {
 
 class Pharmacy {
 private:
-    Medicine medicines[MAX_MEDICINES];
+    Node* head;
     int medicineCount;
 
 public:
-    Pharmacy() {
-        medicineCount = 0;
+    Pharmacy() : head(nullptr), medicineCount(0) {}
+
+    ~Pharmacy() {
+        Node* current = head;
+        while (current) {
+            Node* temp = current;
+            current = current->next;
+            delete temp;
+        }
     }
 
-    void loadData(const char* filename) {
-        FILE* file = fopen(filename, "r");
-        if (!file) {
-            cout << "Error opening file!" << endl;
-            return;
-        }
 
-        char name[50], genericName[50], supplier[50], expiryDate[15];
-        float price;
-        int quantity;
 
-        while (fscanf(file, "%s %s %s %f %d %s", name, genericName, supplier, &price, &quantity, expiryDate) != EOF) {
-            medicines[medicineCount++] = Medicine(name, genericName, supplier, price, quantity, expiryDate);
-        }
-        fclose(file);
-    }
 
     void printHeader() {
         cout << "+----------------+----------------+---------------------+----------+----------+-------------+" << endl;
@@ -190,105 +183,104 @@ public:
 
 
 
-
-
-
-
-void searchMedicine(const char* searchTerm) {
-    char searchLower[50];
-    myStrcpy(searchLower, searchTerm);
-    trim(searchLower); 
-    toLowerCase(searchLower); 
-    bool found = false; 
-
+    void displayAllMedicines() {
     printHeader();
-    for (int i = 0; i < medicineCount; i++) {
-      
-        char medicineName[50];
-        char genericName[50];
-        myStrcpy(medicineName, medicines[i].getName());
-        myStrcpy(genericName, medicines[i].getGenericName());
+    Node* current = head;
+    while (current) {
+        current->data.display();
+        current = current->next;
+    }
+    printFooter();
+}
 
-        toLowerCase(medicineName);
-        toLowerCase(genericName);
-        trim(medicineName);
-        trim(genericName);
+    void searchMedicine(const char* searchTerm) {
+        char searchLower[50];
+        myStrcpy(searchLower, searchTerm);
+        trim(searchLower);
+        toLowerCase(searchLower);
+        bool found = false;
 
-        if (myStrcmp(medicineName, searchLower) == 0 || myStrcmp(genericName, searchLower) == 0) {
-            medicines[i].display();
-            found = true;
+        printHeader();
+        Node* current = head;
+        while (current) {
+            char medicineName[50], genericName[50];
+            myStrcpy(medicineName, current->data.getName());
+            myStrcpy(genericName, current->data.getGenericName());
+            toLowerCase(medicineName);
+            toLowerCase(genericName);
+            trim(medicineName);
+            trim(genericName);
+
+            if (myStrcmp(medicineName, searchLower) == 0 || myStrcmp(genericName, searchLower) == 0) {
+                current->data.display();
+                found = true;
+            }
+            current = current->next;
+        }
+        if (!found) {
+            cout << "| No medicines found matching '" << searchTerm << "' |" << endl;
+        }
+        printFooter();
+    }
+    
+
+void swap(Node* a, Node* b) {
+    Medicine temp = a->data;
+    a->data = b->data;
+    b->data = temp;
+}
+
+void sortMedicines(int sortBy, bool ascending) {
+    if (!head || !head->next) return; 
+
+    for (Node* i = head; i != nullptr; i = i->next) {
+        for (Node* j = i->next; j != nullptr; j = j->next) {
+            bool condition = false;
+            switch (sortBy) {
+                case 1:
+                    condition = (ascending && myStrcmp(i->data.getName(), j->data.getName()) > 0) ||
+                                (!ascending && myStrcmp(i->data.getName(), j->data.getName()) < 0);
+                    break;
+                case 2:
+                    condition = (ascending && myStrcmp(i->data.getGenericName(), j->data.getGenericName()) > 0) ||
+                                (!ascending && myStrcmp(i->data.getGenericName(), j->data.getGenericName()) < 0);
+                    break;
+                case 3:
+                    condition = (ascending && i->data.compareExpiryDate(j->data.getExpiryDate()) > 0) ||
+                                (!ascending && i->data.compareExpiryDate(j->data.getExpiryDate()) < 0);
+                    break;
+                case 4:
+                    condition = (ascending && i->data.getQuantity() > j->data.getQuantity()) ||
+                                (!ascending && i->data.getQuantity() < j->data.getQuantity());
+                    break;
+            }
+            if (condition) {
+                swap(i, j);
+            }
         }
     }
+}
+
+void filterByQuantity(int minQty, int maxQty) {
+    printHeader();
+    Node* current = head;
+    bool found = false;
+    while (current) {
+        if (current->data.getQuantity() >= minQty && current->data.getQuantity() <= maxQty) {
+            current->data.display();
+            found = true;
+        }
+        current = current->next;
+    }
     if (!found) {
-        cout << "| No medicines found matching '" << searchTerm << "' |" << endl;
+        cout << "| No medicines found within the specified quantity range |" << endl;
     }
     printFooter();
 }
 
 
 
-
-
-
-
-
-    void swap(Medicine &a, Medicine &b) {
-        Medicine temp = a;
-        a = b;
-        b = temp;
-    }
-
-    void sortMedicines(int sortBy, bool ascending) {
-        for (int i = 0; i < medicineCount; i++) {
-            for (int j = i + 1; j < medicineCount; j++) {
-                bool condition = false;
-                switch (sortBy) {
-                    case 1:
-                        condition = (ascending && myStrcmp(medicines[i].getName(), medicines[j].getName()) > 0) ||
-                                    (!ascending && myStrcmp(medicines[i].getName(), medicines[j].getName()) < 0);
-                        break;
-                    case 2:
-                        condition = (ascending && myStrcmp(medicines[i].getGenericName(), medicines[j].getGenericName()) > 0) ||
-                                    (!ascending && myStrcmp(medicines[i].getGenericName(), medicines[j].getGenericName()) < 0);
-                        break;
-                    case 3:
-                        condition = (ascending && medicines[i].compareExpiryDate(medicines[j].getExpiryDate()) > 0) ||
-                                    (!ascending && medicines[i].compareExpiryDate(medicines[j].getExpiryDate()) < 0);
-                        break;
-                    case 4:
-                        condition = (ascending && medicines[i].getQuantity() > medicines[j].getQuantity()) ||
-                                    (!ascending && medicines[i].getQuantity() < medicines[j].getQuantity());
-                        break;
-                }
-                if (condition) {
-                    swap(medicines[i], medicines[j]);
-                }
-            }
-        }
-    }
-
- 
-
-
-    void filterByQuantity(int minQty, int maxQty) {
-        printHeader();
-        for (int i = 0; i < medicineCount; i++) {
-            if (medicines[i].getQuantity() >= minQty && medicines[i].getQuantity() <= maxQty) {
-                medicines[i].display();
-            }
-        }
-        printFooter();
-    }
-
-    void displayAllMedicines() {
-        printHeader();
-        for (int i = 0; i < medicineCount; i++) {
-            medicines[i].display();
-        }
-        printFooter();
-    }
 };
-
 
 int main() {
     Pharmacy pharmacy;
