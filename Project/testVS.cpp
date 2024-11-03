@@ -380,6 +380,16 @@ int main() {
     cout << "\nMedicines with quantity between 50 and 150:\n";
     pharmacy.filterByQuantity(50, 150);
 
-    system("pause");
+           cout << "\n\n\n";
+
+    cout << "\nAdding a new medicine:\n";
+    pharmacy.addMedicineToFile("medicine_data.txt"); 
+
+    pharmacy.loadData("medicine_data.txt");
+    
+    cout << "\nUpdated Medicines:\n";
+    pharmacy.displayAllMedicines();
+    
+    system("pause");    
     return 0;
 }
