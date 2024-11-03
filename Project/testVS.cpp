@@ -116,6 +116,7 @@ public:
 
     const char* getName() { return name; }
     const char* getGenericName() { return genericName; }
+    const char* getSupplier() { return supplier; }
     const char* getExpiryDate() { return expiryDate; }
     float getPrice() { return price; }
     int getQuantity() { return quantity; }
@@ -347,14 +348,71 @@ void filterByQuantity(int minQty, int maxQty) {
         cout << "Medicine added successfully!" << endl;
     }
 
+    void deleteMedicine(const char* medicineName) {
+    
+    Node* current = head;
 
+   
+    FILE* tempFile = fopen("temp_medicine_data.txt", "w");
+    if (!tempFile) {
+        cout << "Error opening temporary file for writing!" << endl;
+        return;
+    }
+
+
+    char normalizedInput[50];
+    myStrcpy(normalizedInput, medicineName);
+    trim(normalizedInput);
+    toLowerCase(normalizedInput);
+   
+    bool found = false;
+
+ 
+    while (current) {
+       
+        char currentName[50];
+        myStrcpy(currentName, current->data.getName());
+        trim(currentName);
+        toLowerCase(currentName);
+
+        
+        if (myStrcmp(currentName, normalizedInput) != 0) {
+            
+            fprintf(tempFile, "%s %s %s %.2f %d %s\n",
+                current->data.getName(),
+                current->data.getGenericName(),
+                current->data.getSupplier(),
+                current->data.getPrice(),
+                current->data.getQuantity(),
+                current->data.getExpiryDate());
+        } else {
+            found = true; 
+        }
+        current = current->next;
+     }
+
+    fclose(tempFile);
+
+    remove("medicine_data.txt");
+    rename("temp_medicine_data.txt", "medicine_data.txt");
+
+     if (found) {
+         cout << "Medicine '" << medicineName << "' deleted successfully!" << endl;
+
+         
+         clearMedicines();
+
+         
+         loadData("medicine_data.txt");
+     } else {
+         cout << "Medicine '" << medicineName << "' not found!" << endl;
+     }
+ }
 
 };
 
 int main() {
     Pharmacy pharmacy;
-
-
     pharmacy.loadData("medicine_data.txt");
 
 
@@ -392,4 +450,5 @@ int main() {
     
     system("pause");    
     return 0;
+
 }
