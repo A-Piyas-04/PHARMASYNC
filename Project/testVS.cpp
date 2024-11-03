@@ -187,6 +187,20 @@ public:
         fclose(file);
     }
     
+    void addMedicine(const Medicine& med) {
+        Node* newNode = new Node(med);
+        if (!head) {
+            head = newNode;
+        } else {
+            Node* current = head;
+            while (current->next) {
+                current = current->next;
+            }
+            current->next = newNode;
+        }
+        medicineCount++;
+    }
+    
 
     void printHeader() {
         cout << "+----------------+----------------+---------------------+----------+----------+-------------+" << endl;
