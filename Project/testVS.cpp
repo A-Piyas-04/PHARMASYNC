@@ -348,6 +348,19 @@ void filterByQuantity(int minQty, int maxQty) {
         cout << "Medicine added successfully!" << endl;
     }
 
+
+    void clearMedicines() {
+    Node* current = head;
+    while (current) {
+        Node* temp = current;
+        current = current->next;
+        delete temp;
+    }
+    head = nullptr; 
+    medicineCount = 0;
+    } 
+
+
     void deleteMedicine(const char* medicineName) {
     
     Node* current = head;
