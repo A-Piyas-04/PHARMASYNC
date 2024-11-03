@@ -152,6 +152,12 @@ public:
 };
 
 
+struct Node {
+    Medicine data;
+    Node* next;
+    Node(Medicine med) : data(med), next(nullptr) {}
+};
+
 class Pharmacy {
 private:
     Medicine medicines[MAX_MEDICINES];
