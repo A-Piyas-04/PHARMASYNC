@@ -448,7 +448,7 @@ int main() {
 
 
 
-    // Add,delete & Display updated list
+    
 
     while(1){
     cout << "\n**\n**\n**\n";
@@ -464,8 +464,6 @@ int main() {
         cout << "Adding a new medicine:" << endl;
 
         pharmacy.addMedicineToFile("medicine_data.txt");
-
-        pharmacy.loadData("medicine_data.txt");
 
         cout << "Updated Medicines:" << endl;
         pharmacy.displayAllMedicines();
