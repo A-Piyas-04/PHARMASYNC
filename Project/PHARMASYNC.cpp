@@ -494,8 +494,10 @@ void deleteMedicine(const char* medicineName) {
 int main() {
     Pharmacy pharmacy;
     pharmacy.loadData("medicine_data.txt");
+
     int mainChoice;
-     while (true) {
+
+    while (true) {
         // Display the title and main menu
         cout << "\n==============================\n";
         cout << "   Welcome to PHARMASYNC\n";
@@ -532,57 +534,48 @@ int main() {
                 cout << "Invalid choice. Please try again.\n";
             }
 
-        }
-    }
+        } else if (mainChoice == 2) {
+            // Stock Manipulation Menu
+            while (true) {
+                cout << "\n--- Stock Manipulation ---\n";
+                cout << "1. Add a medicine\n";
+                cout << "2. Update a medicine\n";
+                cout << "3. Delete a medicine\n";
+                cout << "4. Go Back\n";
+                cout << "Enter your choice: ";
+                int stockChoice;
+                cin >> stockChoice;
 
+                if (stockChoice == 1) {
+                    cout << "Adding a new medicine:\n";
+                    pharmacy.addMedicineToFile("medicine_data.txt");
+                    cout << "\nUpdated Medicines:\n";
+                    pharmacy.displayAllMedicines();
+                } else if (stockChoice == 2) {
+                    cout << "Update a medicine:\n";
+                    pharmacy.updateMedicine("medicine_data.txt");
+                } else if (stockChoice == 3) {
+                    cout << "Enter the name of the medicine to delete: ";
+                    char medName[50];
+                    cin.ignore(); // Clear the buffer
+                    cin.getline(medName, 50);
+                    pharmacy.deleteMedicine(medName);
+                    cout << "\nUpdated Medicines:\n";
+                    pharmacy.displayAllMedicines();
+                } else if (stockChoice == 4) {
+                    break; // Go back to the main menu
+                } else {
+                    cout << "Invalid choice. Please try again.\n";
+                }
+            }
 
-   
-
-
-
-    
-
-    while(1){
-     cout << "1. Add a medicine" << endl;
-     cout << "2. Update a medicine" << endl; // Add this line
-     cout << "3. Delete a medicine" << endl;
-     cout << "4. Exit" << endl;
-     cout << "Enter a Number : ";
-    
-    int choice;
-    cin >> choice;
-
-    if (choice == 1) {
-        cout << "Adding a new medicine:" << endl;
-
-        pharmacy.addMedicineToFile("medicine_data.txt");
-
-        cout << "Updated Medicines:" << endl;
-        pharmacy.displayAllMedicines();
-
-
-    }else if (choice == 2) {
-    cout << "Update a medicine:" << endl;
-    pharmacy.updateMedicine("medicine_data.txt");
+        } else if (mainChoice == 3) {
+            cout << "Exiting PHARMASYNC. Goodbye!\n";
+            break; // Exit the program
+        } else {
+            cout << "Invalid choice. Please try again.\n";
+        }
     }
-     else if (choice == 3) {
-        cout << "Enter the name of the medicine to delete: ";
-        char medName[50];
-        cin.ignore(); // Clear the buffer
-        cin.getline(medName, 50);
 
-        pharmacy.deleteMedicine(medName);
-        cout << "\nUpdated Medicines:\n";
-        pharmacy.displayAllMedicines();
-
-    } 
-    else {
-        break;
-    }
-   
-  }
-
-    system("pause");
-    
-    return 0;
+    return 0;
 }
