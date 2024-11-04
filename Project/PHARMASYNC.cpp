@@ -523,9 +523,28 @@ int main() {
             if(viewChoice == 1){  
                  pharmacy.displayAllMedicines();
             }else if (viewChoice == 2) {
-                pharmacy.searchMedicine();
+                //pharmacy.searchMedicine();
             } else if (viewChoice == 3) {
-               // pharmacy.sortMedicines();
+                               cout << "\nSort Options:" << endl;
+                cout << "1. By Name" << endl;
+                cout << "2. By Generic Name" << endl;
+                cout << "3. By Expiry Date" << endl;
+                cout << "4. By Quantity" << endl;
+                cout << "Enter the number corresponding to your sort choice: ";
+                
+                int sortOption;
+                cin >> sortOption;
+                
+                cout << "Choose sort order (1 for Ascending, 0 for Descending): ";
+                bool ascending;
+                cin >> ascending;
+                
+                // Call the sortMedicines function
+                pharmacy.sortMedicines(sortOption, ascending);
+                
+                // Display sorted medicines
+                cout << "\nSorted Medicines:" << endl;
+                pharmacy.displayAllMedicines();
             } else if (viewChoice == 4) {
                 //pharmacy.filterByQuantity();
             } else if (viewChoice == 5) {
