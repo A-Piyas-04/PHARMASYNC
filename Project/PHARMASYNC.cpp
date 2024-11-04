@@ -412,6 +412,80 @@ void deleteMedicine(const char* medicineName) {
  }
 
 
+ void updateMedicine(const char* filename) {
+    cout << "Choose what to update (1: Price, 2: Quantity): ";
+    int updateChoice;
+    cin >> updateChoice;
+
+    if (updateChoice != 1 && updateChoice != 2) {
+        cout << "Invalid choice!" << endl;
+        return;
+    }
+
+    cout << "Enter the name of the medicine to update: ";
+    char medName[50];
+    cin.ignore(); // Clear the buffer
+    cin.getline(medName, 50);
+   
+
+    FILE* tempFile = fopen("temp_medicine_data.txt", "w");
+    if (!tempFile) {
+        cout << "Error opening temporary file for writing!" << endl;
+        return;
+    }
+
+    bool found = false;
+    Node* current = head;
+    while (current) {
+        char currentName[50];
+        myStrcpy(currentName, current->data.getName());
+        trim(currentName);
+        toLowerCase(currentName);
+
+        if (myStrcmp(currentName, medName) == 0) {
+            found = true;
+            if (updateChoice == 1) {
+                cout << "Enter the new price: ";
+                float newPrice;
+                cin >> newPrice;
+                current->data.setPrice(newPrice);
+            } else if (updateChoice == 2) {
+                cout << "Enter the new quantity: ";
+                int newQuantity;
+                cin >> newQuantity;
+                current->data.setQuantity(newQuantity);
+            }
+        }
+
+        // Write the updated or unchanged medicine to the temp file
+        fprintf(tempFile, "%s %s %s %.2f %d %s\n",
+                current->data.getName(),
+                current->data.getGenericName(),
+                current->data.getSupplier(),
+                current->data.getPrice(),
+                current->data.getQuantity(),
+                current->data.getExpiryDate());
+
+        current = current->next;
+    }
+    fclose(tempFile);
+
+    // Replace the original file with the updated temp file
+    remove(filename);
+    rename("temp_medicine_data.txt", filename);
+
+    if (found) {
+        cout << "Medicine '" << medName << "' updated successfully!" << endl;
+        clearMedicines(); // Clear and reload the data to reflect updates
+        loadData(filename);
+        searchMedicine(medName); // Display only the updated medicine
+    } else {
+        cout << "Medicine '" << medName << "' not found!" << endl;
+    }
+}
+
+
+
 
 };
 
