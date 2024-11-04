@@ -28,4 +28,3 @@ Nexium          Esomeprazole    ABC_Corp             55.00 50 2025-04-19
 Norvasc         Amlodipine      ABC_Corp             30.00 50 2024-08-10  
 Xarelto         Rivaroxaban     ABC_Corp             100.00 40 2025-01-01  
 Risperidone     Risperidone     ABC_Corp             45.00 35 2024-12-20  
-ass xxx qrs 100.00 20 2025-02-20
