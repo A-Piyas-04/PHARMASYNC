@@ -426,6 +426,8 @@ void deleteMedicine(const char* medicineName) {
     char medName[50];
     cin.ignore(); // Clear the buffer
     cin.getline(medName, 50);
+    trim(medName);
+    toLowerCase(medName);
    
 
     FILE* tempFile = fopen("temp_medicine_data.txt", "w");
