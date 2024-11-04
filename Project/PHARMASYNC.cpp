@@ -527,11 +527,11 @@ int main() {
     
 
     while(1){
-    cout << "\n**\n**\n**\n";
-    cout << "1. Add a medicine" << endl;
-    cout << "2. Delete a medicine" << endl;
-    cout << "3. Exit" << endl;
-    cout << "Choose: ";
+     cout << "1. Add a medicine" << endl;
+     cout << "2. Update a medicine" << endl; // Add this line
+     cout << "3. Delete a medicine" << endl;
+     cout << "4. Exit" << endl;
+     cout << "Enter a Number : ";
     
     int choice;
     cin >> choice;
@@ -545,8 +545,11 @@ int main() {
         pharmacy.displayAllMedicines();
 
 
+    }else if (choice == 2) {
+    cout << "Update a medicine:" << endl;
+    pharmacy.updateMedicine("medicine_data.txt");
     }
-     else if (choice == 2) {
+     else if (choice == 3) {
         cout << "Enter the name of the medicine to delete: ";
         char medName[50];
         cin.ignore(); // Clear the buffer
