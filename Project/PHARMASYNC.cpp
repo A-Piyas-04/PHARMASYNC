@@ -1,8 +1,8 @@
 #include <iostream>
-
 #define MAX_MEDICINES 100
 
 using namespace std;
+
 
 void myStrcpy(char* destination, const char* source) {
     int i = 0;
@@ -216,35 +216,47 @@ public:
     printFooter();
 }
 
-    void searchMedicine(const char* searchTerm) {
-        char searchLower[50];
-        myStrcpy(searchLower, searchTerm);
-        trim(searchLower);
-        toLowerCase(searchLower);
-        bool found = false;
+void searchMedicine() {
+    // Ask for user input
+    char searchTerm[50];
+    cout << "Enter the name or generic name of the medicine to search: ";
+    cin.ignore(); // To handle any leftover newline character in the buffer
+    cin.getline(searchTerm, 50); // Read the input
 
-        printHeader();
-        Node* current = head;
-        while (current) {
-            char medicineName[50], genericName[50];
-            myStrcpy(medicineName, current->data.getName());
-            myStrcpy(genericName, current->data.getGenericName());
-            toLowerCase(medicineName);
-            toLowerCase(genericName);
-            trim(medicineName);
-            trim(genericName);
+    // Process the input: convert to lowercase and trim
+    char searchLower[50];
+    myStrcpy(searchLower, searchTerm);
+    trim(searchLower);
+    toLowerCase(searchLower);
 
-            if (myStrcmp(medicineName, searchLower) == 0 || myStrcmp(genericName, searchLower) == 0) {
-                current->data.display();
-                found = true;
-            }
-            current = current->next;
+    bool found = false;
+    printHeader();
+
+    // Traverse the linked list and search
+    Node* current = head;
+    while (current) {
+        char medicineName[50], genericName[50];
+        myStrcpy(medicineName, current->data.getName());
+        myStrcpy(genericName, current->data.getGenericName());
+        toLowerCase(medicineName);
+        toLowerCase(genericName);
+        trim(medicineName);
+        trim(genericName);
+
+        if (myStrcmp(medicineName, searchLower) == 0 || myStrcmp(genericName, searchLower) == 0) {
+            current->data.display();
+            found = true;
         }
-        if (!found) {
-            cout << "| No medicines found matching '" << searchTerm << "' |" << endl;
-        }
-        printFooter();
+        current = current->next;
     }
+
+    if (!found) {
+        cout << "| No medicines found matching '" << searchTerm << "' |" << endl;
+    }
+
+    printFooter();
+}
+
     
 
 void swap(Node* a, Node* b) {
@@ -478,9 +490,10 @@ void deleteMedicine(const char* medicineName) {
 
     if (found) {
         cout << "Medicine '" << medName << "' updated successfully!" << endl;
-        clearMedicines(); // Clear and reload the data to reflect updates
-        loadData(filename);
-        searchMedicine(medName); // Display only the updated medicine
+
+        // clearMedicines(); // Clear and reload the data to reflect updates
+        // loadData(filename);
+        // searchMedicine(medName); // Display only the updated medicine
     } else {
         cout << "Medicine '" << medName << "' not found!" << endl;
     }
@@ -501,7 +514,7 @@ int main() {
         // Display the title and main menu
         cout << "\n==============================\n";
         cout << "   Welcome to PHARMASYNC\n";
-        cout << "==============================\n";
+        cout << "==============================\n\n";
         cout << "1. View Medicine\n";
         cout << "2. Stock Manipulation\n";
         cout << "3. Exit\n";
@@ -515,7 +528,7 @@ int main() {
             cout << "1. View All Medicines\n";
             cout << "2. Search Medicine\n";
             cout << "3. Sort Medicines\n";
-            cout << "4. Filter Medicines\n";
+            cout << "4. Filter By Quantity\n";
             cout << "5. Go Back\n";
             cout << "Enter your choice: ";
             cin >> viewChoice;
@@ -523,9 +536,11 @@ int main() {
             if(viewChoice == 1){  
                  pharmacy.displayAllMedicines();
             }else if (viewChoice == 2) {
-                //pharmacy.searchMedicine();
+                pharmacy.searchMedicine();
             } else if (viewChoice == 3) {
-                               cout << "\nSort Options:" << endl;
+
+    
+                cout << "\nSort Options:" << endl;
                 cout << "1. By Name" << endl;
                 cout << "2. By Generic Name" << endl;
                 cout << "3. By Expiry Date" << endl;
@@ -545,8 +560,21 @@ int main() {
                 // Display sorted medicines
                 cout << "\nSorted Medicines:" << endl;
                 pharmacy.displayAllMedicines();
+
+
+
             } else if (viewChoice == 4) {
-                //pharmacy.filterByQuantity();
+                cout << "\nEnter the lower bound of quantity: ";
+                int lowerBound;
+                cin >> lowerBound;
+
+                cout << "Enter the upper bound of quantity: ";
+                int upperBound;
+                cin >> upperBound;
+
+                cout << "\nMedicines with quantity between " << lowerBound << " and " << upperBound << ":\n";
+                pharmacy.filterByQuantity(lowerBound, upperBound);
+
             } else if (viewChoice == 5) {
                 continue; // Go back to the main menu
             } else {
@@ -576,7 +604,7 @@ int main() {
                 } else if (stockChoice == 3) {
                     cout << "Enter the name of the medicine to delete: ";
                     char medName[50];
-                    cin.ignore(); // Clear the buffer
+                    cin.ignore(); 
                     cin.getline(medName, 50);
                     pharmacy.deleteMedicine(medName);
                     cout << "\nUpdated Medicines:\n";
@@ -596,5 +624,5 @@ int main() {
         }
     }
 
-    return 0;
+    return 0;
 }
