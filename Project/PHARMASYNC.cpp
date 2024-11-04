@@ -494,35 +494,49 @@ void deleteMedicine(const char* medicineName) {
 int main() {
     Pharmacy pharmacy;
     pharmacy.loadData("medicine_data.txt");
+    int mainChoice;
+     while (true) {
+        // Display the title and main menu
+        cout << "\n==============================\n";
+        cout << "   Welcome to PHARMASYNC\n";
+        cout << "==============================\n";
+        cout << "1. View Medicine\n";
+        cout << "2. Stock Manipulation\n";
+        cout << "3. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> mainChoice;
 
-    cout << "\nAll Medicines:\n";
-    pharmacy.displayAllMedicines();
+        if (mainChoice == 1) {
+            // View Medicine Menu
+            int viewChoice;
+            cout << "\n--- View Medicine ---\n";
+            cout << "1. View All Medicines\n";
+            cout << "2. Search Medicine\n";
+            cout << "3. Sort Medicines\n";
+            cout << "4. Filter Medicines\n";
+            cout << "5. Go Back\n";
+            cout << "Enter your choice: ";
+            cin >> viewChoice;
+
+            if(viewChoice == 1){  
+                 pharmacy.displayAllMedicines();
+            }else if (viewChoice == 2) {
+                pharmacy.searchMedicine();
+            } else if (viewChoice == 3) {
+               // pharmacy.sortMedicines();
+            } else if (viewChoice == 4) {
+                //pharmacy.filterByQuantity();
+            } else if (viewChoice == 5) {
+                continue; // Go back to the main menu
+            } else {
+                cout << "Invalid choice. Please try again.\n";
+            }
+
+        }
+    }
 
 
-    cout << "\nSearch Results for 'Paracetamol':\n";
-    pharmacy.searchMedicine("Paracetamol");
-
-    cout << "\nSearch Results for 'Amoxicillin':\n";
-    pharmacy.searchMedicine("Amoxicillin");
-
-    cout << "\nSearch Results for 'Exium':\n";
-    pharmacy.searchMedicine("Exium");
-
-
-    cout << "\nMedicines sorted by Name (Ascending):\n";
-    pharmacy.sortMedicines(1, true);
-    pharmacy.displayAllMedicines();
-
-    cout << "\nMedicines sorted by Expiry Date (Ascending):\n";
-    pharmacy.sortMedicines(3, true);
-    pharmacy.displayAllMedicines();
-
-    cout << "\nMedicines sorted by Quantity (Descending):\n";
-    pharmacy.sortMedicines(4, false);
-    pharmacy.displayAllMedicines();
-
-    cout << "\nMedicines with quantity between 50 and 150:\n";
-    pharmacy.filterByQuantity(50, 150);
+   
 
 
 
