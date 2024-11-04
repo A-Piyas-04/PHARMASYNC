@@ -112,6 +112,8 @@ public:
     const char* getExpiryDate() { return expiryDate; }
     float getPrice() { return price; }
     int getQuantity() { return quantity; }
+    void setPrice(float newPrice) { price = newPrice; }
+    void setQuantity(int newQuantity) { quantity = newQuantity; }
 
     void display() {
         char namePad[50], genericNamePad[50], supplierPad[50], priceStr[10], quantityStr[10];
