@@ -534,7 +534,7 @@ void searchBySupplier() {
         cout << "| No medicines found matching supplier '" << searchTerm << "' |" << endl;
     }
 
-   
+    printFooter();
 }
 
 
