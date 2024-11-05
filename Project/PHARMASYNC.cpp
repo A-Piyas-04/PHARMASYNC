@@ -619,7 +619,7 @@ int main() {
                     pharmacy.filterByQuantity(lowerBound, upperBound);
 
                 } else if (filterChoice == 2) {
-                    pharmacy.searchBySupplier(searchTerm);
+                    pharmacy.searchBySupplier();
 
                 } else {
                     cout << "Invalid filter choice. Please try again.\n";
@@ -663,7 +663,7 @@ int main() {
                     pharmacy.displayAllMedicines();
                 } else if (stockChoice == 4) {
                     break; // Go back to the main menu
-                    
+
                 } else {
                     cout << "Invalid choice. Please try again.\n";
                 }
