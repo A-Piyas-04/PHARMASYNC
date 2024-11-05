@@ -499,6 +499,7 @@ void deleteMedicine(const char* medicineName) {
     }
 }
 
+
 void searchBySupplier() {
    
     char searchTerm[50];
@@ -536,6 +537,8 @@ void searchBySupplier() {
 
     printFooter();
 }
+
+
 
 
 
@@ -648,11 +651,9 @@ int main() {
                     pharmacy.addMedicineToFile("medicine_data.txt");
                     cout << "\nUpdated Medicines:\n";
                     pharmacy.displayAllMedicines();
-
                 } else if (stockChoice == 2) {
                     cout << "Update a medicine:\n";
                     pharmacy.updateMedicine("medicine_data.txt");
-
                 } else if (stockChoice == 3) {
                     cout << "Enter the name of the medicine to delete: ";
                     char medName[50];
@@ -663,7 +664,6 @@ int main() {
                     pharmacy.displayAllMedicines();
                 } else if (stockChoice == 4) {
                     break; // Go back to the main menu
-
                 } else {
                     cout << "Invalid choice. Please try again.\n";
                 }
@@ -677,5 +677,5 @@ int main() {
         }
     }
 
-    return 0;
+    return 0;
 }
