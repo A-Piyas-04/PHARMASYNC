@@ -499,6 +499,44 @@ void deleteMedicine(const char* medicineName) {
     }
 }
 
+void searchBySupplier() {
+   
+    char searchTerm[50];
+    cout << "Enter the supplier name to search: ";
+    cin.ignore(); 
+    cin.getline(searchTerm, 50); 
+
+    
+    char searchLower[50];
+    myStrcpy(searchLower, searchTerm);
+    trim(searchLower);
+    toLowerCase(searchLower);
+
+    bool found = false;
+    printHeader();
+
+  
+    Node* current = head;
+    while (current) {
+        char supplierName[50];
+        myStrcpy(supplierName, current->data.getSupplier());
+        toLowerCase(supplierName);
+        trim(supplierName);
+
+        if (myStrcmp(supplierName, searchLower) == 0) {
+            current->data.display();
+            found = true;
+        }
+        current = current->next;
+    }
+
+    if (!found) {
+        cout << "| No medicines found matching supplier '" << searchTerm << "' |" << endl;
+    }
+
+   
+}
+
 
 
 
