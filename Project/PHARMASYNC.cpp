@@ -566,52 +566,64 @@ int main() {
             cout << "1. View All Medicines\n";
             cout << "2. Search Medicine\n";
             cout << "3. Sort Medicines\n";
-            cout << "4. Filter By Quantity\n";
+            cout << "4. Filter Medicines\n"; // Modified for two filter options
             cout << "5. Go Back\n";
             cout << "Enter your choice: ";
             cin >> viewChoice;
 
-            if(viewChoice == 1){  
-                 pharmacy.displayAllMedicines();
-            }else if (viewChoice == 2) {
+            if (viewChoice == 1) {
+                pharmacy.displayAllMedicines();
+            } else if (viewChoice == 2) {
                 pharmacy.searchMedicine();
             } else if (viewChoice == 3) {
-
-    
-                cout << "\nSort Options:" << endl;
-                cout << "1. By Name" << endl;
-                cout << "2. By Generic Name" << endl;
-                cout << "3. By Expiry Date" << endl;
-                cout << "4. By Quantity" << endl;
+                cout << "\nSort Options:\n";
+                cout << "1. By Name\n";
+                cout << "2. By Generic Name\n";
+                cout << "3. By Expiry Date\n";
+                cout << "4. By Quantity\n";
                 cout << "Enter the number corresponding to your sort choice: ";
-                
+
                 int sortOption;
                 cin >> sortOption;
-                
+
                 cout << "Choose sort order (1 for Ascending, 0 for Descending): ";
                 bool ascending;
                 cin >> ascending;
-                
+
                 // Call the sortMedicines function
                 pharmacy.sortMedicines(sortOption, ascending);
-                
+
                 // Display sorted medicines
-                cout << "\nSorted Medicines:" << endl;
+                cout << "\nSorted Medicines:\n";
                 pharmacy.displayAllMedicines();
 
-
-
             } else if (viewChoice == 4) {
-                cout << "\nEnter the lower bound of quantity: ";
-                int lowerBound;
-                cin >> lowerBound;
+                // New sub-menu for filter options
+                int filterChoice;
+                cout << "\n--- Filter Options ---\n";
+                cout << "1. Filter by Quantity\n";
+                cout << "2. Filter by Supplier\n";
+                cout << "Enter your choice: ";
+                cin >> filterChoice;
 
-                cout << "Enter the upper bound of quantity: ";
-                int upperBound;
-                cin >> upperBound;
+                if (filterChoice == 1) {
+                    cout << "\nEnter the lower bound of quantity: ";
+                    int lowerBound;
+                    cin >> lowerBound;
 
-                cout << "\nMedicines with quantity between " << lowerBound << " and " << upperBound << ":\n";
-                pharmacy.filterByQuantity(lowerBound, upperBound);
+                    cout << "Enter the upper bound of quantity: ";
+                    int upperBound;
+                    cin >> upperBound;
+
+                    cout << "\nMedicines with quantity between " << lowerBound << " and " << upperBound << ":\n";
+                    pharmacy.filterByQuantity(lowerBound, upperBound);
+
+                } else if (filterChoice == 2) {
+                    pharmacy.searchBySupplier(searchTerm);
+
+                } else {
+                    cout << "Invalid filter choice. Please try again.\n";
+                }
 
             } else if (viewChoice == 5) {
                 continue; // Go back to the main menu
@@ -636,19 +648,22 @@ int main() {
                     pharmacy.addMedicineToFile("medicine_data.txt");
                     cout << "\nUpdated Medicines:\n";
                     pharmacy.displayAllMedicines();
+
                 } else if (stockChoice == 2) {
                     cout << "Update a medicine:\n";
                     pharmacy.updateMedicine("medicine_data.txt");
+
                 } else if (stockChoice == 3) {
                     cout << "Enter the name of the medicine to delete: ";
                     char medName[50];
-                    cin.ignore(); 
+                    cin.ignore();
                     cin.getline(medName, 50);
                     pharmacy.deleteMedicine(medName);
                     cout << "\nUpdated Medicines:\n";
                     pharmacy.displayAllMedicines();
                 } else if (stockChoice == 4) {
                     break; // Go back to the main menu
+                    
                 } else {
                     cout << "Invalid choice. Please try again.\n";
                 }
@@ -662,5 +677,5 @@ int main() {
         }
     }
 
-    return 0;
+    return 0;
 }
