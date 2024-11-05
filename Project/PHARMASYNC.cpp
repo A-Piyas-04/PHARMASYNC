@@ -121,7 +121,7 @@ public:
         padString(genericName, 15);
         padString(supplier, 20);
         intToStr(price, priceStr, 8);
-        intToStr(quantity, quantityStr, 9);
+        intToStr(quantity, quantityStr, 8);
         padString(expiryDate, 12);
         cout << "| " << name << "| " << genericName << "| " << supplier << "| " << priceStr << "| " << quantityStr << "| " << expiryDate << "|" << endl;
     }
@@ -195,13 +195,13 @@ public:
     }
 
     void printHeader() {
-        cout << "+----------------+----------------+---------------------+----------+----------+-------------+" << endl;
-        cout << "| Name           | Generic Name   | Supplier            | Price    | Quantity | Expiry Date |" << endl;
-        cout << "+----------------+----------------+---------------------+----------+----------+-------------+" << endl;
+        cout << "+----------------+----------------+---------------------+---------+---------+-------------+" << endl;
+        cout << "| Name           | Generic Name   | Supplier            | Price   | Quantity| Expiry Date |" << endl;
+        cout << "+----------------+----------------+---------------------+---------+---------+-------------+" << endl;
     }
 
     void printFooter() {
-        cout << "+----------------+----------------+---------------------+----------+----------+-------------+" << endl;
+        cout << "+----------------+----------------+---------------------+---------+---------+-------------+" << endl;
     }
 
 
