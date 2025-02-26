@@ -1,0 +1,38 @@
+#ifndef PHARMACY_H
+#define PHARMACY_H
+
+#include "medicine.h"
+
+using namespace std;
+
+struct Node {
+    Medicine data;
+    Node* next;
+    Node(Medicine med) : data(med), next(nullptr) {}
+};
+
+class Pharmacy {
+private:
+    Node* head;
+    int medicineCount;
+
+    void printHeader();
+    void printFooter();
+    void swap(Node* a, Node* b);
+
+public:
+    Pharmacy();
+    ~Pharmacy();
+
+    void loadData(const char* filename);
+    void addMedicine(const Medicine& med);
+    void displayAllMedicines();
+    void searchMedicine();
+    void sortMedicines(int sortBy, bool ascending);
+    void filterByQuantity(int minQty, int maxQty);
+    void addMedicineToFile(const char* filename);
+    void updateMedicine(const char* filename);
+    void searchBySupplier();
+};
+
+#endif // PHARMACY_H
