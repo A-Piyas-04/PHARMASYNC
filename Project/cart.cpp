@@ -49,28 +49,29 @@ void Cart::printReceipt() {
         return;
     }
 
-    cout << "\n================ PHARMASYNC RECEIPT ================" << endl;
+    cout << "\n================================= PHARMASYNC RECEIPT =================================" << endl;
     cout << "Date: [Current Date]" << endl;
-    cout << "==================================================" << endl;
-    cout << "\n";
-    cout << left << setw(25) << "Medicine"
-         << right << setw(8) << "Qty"
-         << right << setw(15) << "Price"
-         << right << setw(15) << "Subtotal" << endl;
-    cout << "--------------------------------------------------" << endl;
+    cout << "========================================================================================" << endl;
 
+    // Header with consistent column widths
+    cout << left << setw(30) << "Medicine"
+         << right << setw(5) << "Qty"
+         << right << setw(12) << "Price"
+         << right << setw(12) << "Subtotal" << endl;
+    cout << string(59, '-') << endl;
+
+    // Print items with consistent decimal places and alignment
     for (const CartItem& item : items) {
-        Medicine tempMed = item.medicine;
-        cout << left << setw(25) << tempMed.getName()
-             << right << setw(8) << item.quantity
-             << right << setw(15) << "$" + to_string(tempMed.getPrice()).substr(0, to_string(tempMed.getPrice()).find(".") + 3)
-             << right << setw(15) << "$" + to_string(item.subtotal).substr(0, to_string(item.subtotal).find(".") + 3) << endl;
+        cout << left << setw(30) << item.medicine.getName()
+             << right << setw(5) << item.quantity
+             << right << setw(12) << "$" + to_string(item.medicine.getPrice()).substr(0, to_string(item.medicine.getPrice()).find(".") + 3)
+             << right << setw(12) << "$" + to_string(item.subtotal).substr(0, to_string(item.subtotal).find(".") + 3) << endl;
     }
 
-    cout << "\n";
-    cout << "--------------------------------------------------" << endl;
-    cout << right << setw(48) << "Subtotal: $" << fixed << setprecision(2) << total << endl;
-    cout << "==================================================" << endl;
-    cout << "\n                Thank you for shopping!              " << endl;
-    cout << "\n==================================================" << endl;
+    // Footer with proper alignment
+    cout << string(59, '-') << endl;
+    cout << right << setw(47) << "Subtotal: $" << fixed << setprecision(2) << total << endl;
+    cout << "========================================================================================" << endl;
+    cout << setw(35) << right << "     Thank you for shopping!" << endl;
+    cout << "========================================================================================" << endl;
 }
