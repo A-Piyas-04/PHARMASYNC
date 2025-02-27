@@ -49,9 +49,9 @@ void Cart::printReceipt() {
         return;
     }
 
-    cout << "\n================================= PHARMASYNC RECEIPT =================================" << endl;
+    cout << "\n==================== PHARMASYNC RECEIPT ====================" << endl;
     cout << "Date: [Current Date]" << endl;
-    cout << "========================================================================================" << endl;
+    cout << "==============================================================" << endl;
 
     // Header with consistent column widths
     cout << left << setw(30) << "Medicine"
@@ -71,7 +71,7 @@ void Cart::printReceipt() {
     // Footer with proper alignment
     cout << string(59, '-') << endl;
     cout << right << setw(47) << "Subtotal: $" << fixed << setprecision(2) << total << endl;
-    cout << "========================================================================================" << endl;
+    cout << "==============================================================" << endl;
     cout << setw(35) << right << "     Thank you for shopping!" << endl;
-    cout << "========================================================================================" << endl;
+    cout << "==============================================================" << endl;
 }
