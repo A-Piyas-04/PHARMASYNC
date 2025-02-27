@@ -33,6 +33,11 @@ public:
     void addMedicineToFile(const char* filename);
     void updateMedicine(const char* filename);
     void searchBySupplier();
+    
+    // New methods for sales functionality
+    Medicine* findMedicine(const char* name, const char* batchID);
+    void updateMedicineQuantity(const char* name, const char* batchID, int quantityChange);
+    void saveToFile(const char* filename);
 };
 
 #endif // PHARMACY_H

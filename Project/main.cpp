@@ -1,4 +1,5 @@
 #include "pharmacy.h"
+#include "cart.h"
 #include <iostream>
 
 using namespace std;
@@ -6,6 +7,7 @@ using namespace std;
 int main() {
     Pharmacy pharmacy;
     pharmacy.loadData("medicine_data.txt");
+    Cart cart;
 
     int mainChoice;
 
@@ -16,7 +18,8 @@ int main() {
         cout << "==============================\n\n";
         cout << "1. Medicine query\n";
         cout << "2. Manage Stock\n";
-        cout << "3. Exit\n";
+        cout << "3. Sell Medicine\n";
+        cout << "4. Exit\n";
         cout << "Enter your choice: ";
         cin >> mainChoice;
 
@@ -117,6 +120,64 @@ int main() {
             }
 
         } else if (mainChoice == 3) {
+            // Sell Medicine Menu
+            while (true) {
+                cout << "\n--- Sell Medicine ---\n";
+                cout << "1. Add Medicine to Cart\n";
+                cout << "2. View Cart\n";
+                cout << "3. Checkout\n";
+                cout << "4. Go Back\n";
+                cout << "Enter your choice: ";
+                int sellChoice;
+                cin >> sellChoice;
+
+                if (sellChoice == 1) {
+                    pharmacy.displayAllMedicines();
+                    cout << "\nEnter the name of the medicine to add to cart: ";
+                    char medName[50];
+                    cin.ignore();
+                    cin.getline(medName, 50);
+                    cout << "Enter the batch ID: ";
+                    char batchID[20];
+                    cin.getline(batchID, 20);
+                    cout << "Enter quantity: ";
+                    int quantity;
+                    cin >> quantity;
+
+                    // Find the medicine and add to cart
+                    Medicine* med = pharmacy.findMedicine(medName, batchID);
+                    if (med != nullptr) {
+                        cart.addItem(*med, quantity);
+                        if (quantity <= med->getQuantity()) {
+                            cout << "Medicine added to cart successfully!\n";
+                        }
+                    } else {
+                        cout << "Medicine not found!\n";
+                    }
+                } else if (sellChoice == 2) {
+                    cart.displayCart();
+                } else if (sellChoice == 3) {
+                    if (cart.getTotal() > 0) {
+                        cart.printReceipt();
+                        // Update stock
+                        for (const CartItem& item : cart.getItems()) {
+                            pharmacy.updateMedicineQuantity(item.medicine.getName(), 
+                                                          item.medicine.getBatchID(), 
+                                                          -item.quantity);
+                        }
+                        pharmacy.saveToFile("medicine_data.txt");
+                        cart.clear();
+                        cout << "\nThank you for your purchase!\n";
+                    } else {
+                        cout << "Cart is empty!\n";
+                    }
+                } else if (sellChoice == 4) {
+                    break;
+                } else {
+                    cout << "Invalid choice. Please try again.\n";
+                }
+            }
+        } else if (mainChoice == 4) {
             cout << "Thank you for using PHARMASYNC\n";
             break;
         } else {

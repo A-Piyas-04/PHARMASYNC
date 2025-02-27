@@ -19,13 +19,13 @@ public:
     Medicine();
     Medicine(const char* n, const char* gName, const char* supp, const char* batch, float pr, int qty, const char* exp);
 
-    const char* getName();
-    const char* getGenericName();
-    const char* getSupplier();
-    const char* getBatchID();
-    const char* getExpiryDate();
-    float getPrice();
-    int getQuantity();
+    const char* getName() const;
+    const char* getGenericName() const;
+    const char* getSupplier() const;
+    const char* getBatchID() const;
+    const char* getExpiryDate() const;
+    float getPrice() const;
+    int getQuantity() const;
     void setPrice(float newPrice);
     void setQuantity(int newQuantity);
 

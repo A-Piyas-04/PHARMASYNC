@@ -15,13 +15,13 @@ Medicine::Medicine(const char* n, const char* gName, const char* supp, const cha
     myStrcpy(expiryDate, exp);
 }
 
-const char* Medicine::getName() { return name; }
-const char* Medicine::getGenericName() { return genericName; }
-const char* Medicine::getSupplier() { return supplier; }
-const char* Medicine::getBatchID() { return batchID; }
-const char* Medicine::getExpiryDate() { return expiryDate; }
-float Medicine::getPrice() { return price; }
-int Medicine::getQuantity() { return quantity; }
+const char* Medicine::getName() const { return name; }
+const char* Medicine::getGenericName() const { return genericName; }
+const char* Medicine::getSupplier() const { return supplier; }
+const char* Medicine::getBatchID() const { return batchID; }
+const char* Medicine::getExpiryDate() const { return expiryDate; }
+float Medicine::getPrice() const { return price; }
+int Medicine::getQuantity() const { return quantity; }
 void Medicine::setPrice(float newPrice) { price = newPrice; }
 void Medicine::setQuantity(int newQuantity) { quantity = newQuantity; }
 

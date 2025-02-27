@@ -350,3 +350,50 @@ void Pharmacy::searchBySupplier() {
 
     printFooter();
 }
+
+Medicine* Pharmacy::findMedicine(const char* name, const char* batchID) {
+    Node* current = head;
+    while (current) {
+        if (myStrcmp(current->data.getName(), name) == 0 &&
+            myStrcmp(current->data.getBatchID(), batchID) == 0) {
+            return &(current->data);
+        }
+        current = current->next;
+    }
+    return nullptr;
+}
+
+void Pharmacy::updateMedicineQuantity(const char* name, const char* batchID, int quantityChange) {
+    Node* current = head;
+    while (current) {
+        if (myStrcmp(current->data.getName(), name) == 0 &&
+            myStrcmp(current->data.getBatchID(), batchID) == 0) {
+            int newQuantity = current->data.getQuantity() + quantityChange;
+            current->data.setQuantity(newQuantity);
+            return;
+        }
+        current = current->next;
+    }
+}
+
+void Pharmacy::saveToFile(const char* filename) {
+    FILE* file = fopen(filename, "w");
+    if (!file) {
+        cout << "Error opening file for writing!" << endl;
+        return;
+    }
+
+    Node* current = head;
+    while (current) {
+        fprintf(file, "%s %s %s %s %.2f %d %s\n",
+                current->data.getName(),
+                current->data.getGenericName(),
+                current->data.getSupplier(),
+                current->data.getBatchID(),
+                current->data.getPrice(),
+                current->data.getQuantity(),
+                current->data.getExpiryDate());
+        current = current->next;
+    }
+    fclose(file);
+}
