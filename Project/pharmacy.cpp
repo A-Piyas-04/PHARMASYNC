@@ -1,5 +1,6 @@
 #include "pharmacy.h"
 #include <iostream>
+#include <cstdio>
 
 using namespace std;
 
@@ -90,7 +91,56 @@ void Pharmacy::searchMedicine() {
         trim(medicineName);
         trim(genericName);
 
-        if (myStrcmp(medicineName, searchLower) == 0 || myStrcmp(genericName, searchLower) == 0) {
+        // Check for exact match or partial match in either name or generic name
+        bool isPartialMatch = false;
+        char* medNamePtr = medicineName;
+        char* genNamePtr = genericName;
+        char* searchPtr = searchLower;
+
+        // Check if search term is a substring of medicine name or generic name
+        while (*medNamePtr) {
+            char* tempMed = medNamePtr;
+            char* tempSearch = searchLower;
+            bool matchFound = true;
+
+            while (*tempSearch && matchFound) {
+                if (*tempMed != *tempSearch) {
+                    matchFound = false;
+                }
+                tempMed++;
+                tempSearch++;
+            }
+
+            if (matchFound && *tempSearch == '\0') {
+                isPartialMatch = true;
+                break;
+            }
+            medNamePtr++;
+        }
+
+        if (!isPartialMatch) {
+            while (*genNamePtr) {
+                char* tempGen = genNamePtr;
+                char* tempSearch = searchLower;
+                bool matchFound = true;
+
+                while (*tempSearch && matchFound) {
+                    if (*tempGen != *tempSearch) {
+                        matchFound = false;
+                    }
+                    tempGen++;
+                    tempSearch++;
+                }
+
+                if (matchFound && *tempSearch == '\0') {
+                    isPartialMatch = true;
+                    break;
+                }
+                genNamePtr++;
+            }
+        }
+
+        if (isPartialMatch || myStrcmp(medicineName, searchLower) == 0 || myStrcmp(genericName, searchLower) == 0) {
             current->data.display();
             found = true;
         }

@@ -26,7 +26,7 @@ void Medicine::setPrice(float newPrice) { price = newPrice; }
 void Medicine::setQuantity(int newQuantity) { quantity = newQuantity; }
 
 void Medicine::display() {
-    char namePad[50], genericNamePad[50], supplierPad[50], batchIDPad[20], priceStr[10], quantityStr[10];
+    char namePad[50], genericNamePad[50], supplierPad[50], batchIDPad[20], quantityStr[10];
     myStrcpy(namePad, name);
     myStrcpy(genericNamePad, genericName);
     myStrcpy(supplierPad, supplier);
@@ -35,7 +35,9 @@ void Medicine::display() {
     padString(genericNamePad, 15);
     padString(supplierPad, 20);
     padString(batchIDPad, 10);
-    intToStr(price, priceStr, 8);
+    char priceStr[10];
+    sprintf(priceStr, "%.2f", price);
+    padString(priceStr, 8);
     intToStr(quantity, quantityStr, 8);
     char expiryDatePad[15];
     myStrcpy(expiryDatePad, expiryDate);

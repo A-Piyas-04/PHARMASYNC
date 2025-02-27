@@ -117,7 +117,7 @@ int main() {
             }
 
         } else if (mainChoice == 3) {
-            cout << "Exiting PHARMASYNC. Goodbye!\n";
+            cout << "Thank you for using PHARMASYNC\n";
             break;
         } else {
             cout << "Invalid choice. Please try again.\n";
