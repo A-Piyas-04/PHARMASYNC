@@ -11,4 +11,10 @@ void intToStr(int num, char* str, int width);
 void toLowerCase(char* str);
 void trim(char* str);
 
+// Color handling functions
+void setTextColorRed();
+void setTextColorDarkYellow();
+void setTextColorCyan();
+void resetTextColor();
+
 #endif // UTILITY_H

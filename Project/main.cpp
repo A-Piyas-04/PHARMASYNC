@@ -17,7 +17,9 @@ int main() {
         cout << "\n*\n";
         cout << "\n*\n";
         cout << "\n==============================\n";
-        cout << "   Welcome to PHARMASYNC\n";
+        setTextColorCyan();
+cout << "   Welcome to PHARMASYNC\n";
+resetTextColor();
         cout << "==============================\n\n";
         cout << "1. Medicine query\n";
         cout << "2. Manage Stock\n";

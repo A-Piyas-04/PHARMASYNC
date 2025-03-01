@@ -1,4 +1,5 @@
 #include "utility.h"
+#include <iostream>
 
 using namespace std;
 
@@ -81,4 +82,20 @@ void trim(char* str) {
         str[i++] = str[start++];
     }
     str[i] = '\0'; 
+}
+
+void setTextColorRed() {
+    cout << "\033[31m";
+}
+
+void setTextColorDarkYellow() {
+    cout << "\033[33m";
+}
+
+void setTextColorCyan() {
+    cout << "\033[96m";
+}
+
+void resetTextColor() {
+    cout << "\033[0m";
 }

@@ -43,23 +43,22 @@ void Medicine::display() {
     char expiryDatePad[15];
     myStrcpy(expiryDatePad, expiryDate);
     padString(expiryDatePad, 12);
-    cout << "| " << namePad << "| " << genericNamePad << "| " << supplierPad << "| " << batchIDPad << "| " << priceStr << "| " << quantityStr << "| " << expiryDatePad << "|";
-    
-    // Add warnings for near expiry and low stock
     bool isNearExp = DateUtility::isNearExpiry(expiryDate);
     bool isLowStock = quantity <= 15;
     
-    if (isNearExp || isLowStock) {
-        cout << "\n|   WARNING: ";
-        if (isNearExp) cout << "Near expiry! ";
-        if (isLowStock) cout << "Low stock! ";
-        cout << string(71 - (isNearExp ? 12 : 0) - (isLowStock ? 11 : 0), ' ') << "|";
+    cout << "| ";
+    if (isNearExp) {
+        setTextColorRed();
+        cout << namePad;
+        resetTextColor();
+    } else if (isLowStock) {
+        setTextColorDarkYellow();
+        cout << namePad;
+        resetTextColor();
+    } else {
+        cout << namePad;
     }
-    cout << endl;
-    
-    if (isNearExp || isLowStock) {
-        cout << "+----------------+----------------+---------------------+-----------+---------+---------+-------------+" << endl;
-    }
+    cout << "| " << genericNamePad << "| " << supplierPad << "| " << batchIDPad << "| " << priceStr << "| " << quantityStr << "| " << expiryDatePad << "|" << endl;
 }
 
 int Medicine::compareExpiryDate(const char* otherExpiryDate) const {
