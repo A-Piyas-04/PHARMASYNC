@@ -19,7 +19,8 @@ int main() {
         cout << "1. Medicine query\n";
         cout << "2. Manage Stock\n";
         cout << "3. Sell Medicine\n";
-        cout << "4. Exit\n";
+        cout << "4. View Notifications (" << pharmacy.getNotificationCount() << ")\n";
+        cout << "5. Exit\n";
         cout << "Enter your choice: ";
         cin >> mainChoice;
 
@@ -178,6 +179,8 @@ int main() {
                 }
             }
         } else if (mainChoice == 4) {
+            pharmacy.checkAndDisplayNotifications();
+        } else if (mainChoice == 5) {
             cout << "Thank you for using PHARMASYNC\n";
             break;
         } else {

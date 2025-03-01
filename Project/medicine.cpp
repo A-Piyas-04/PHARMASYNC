@@ -1,5 +1,6 @@
 #include "medicine.h"
 #include <iostream>
+#include "date_utility.h"
 
 using namespace std;
 
@@ -42,7 +43,23 @@ void Medicine::display() {
     char expiryDatePad[15];
     myStrcpy(expiryDatePad, expiryDate);
     padString(expiryDatePad, 12);
-    cout << "| " << namePad << "| " << genericNamePad << "| " << supplierPad << "| " << batchIDPad << "| " << priceStr << "| " << quantityStr << "| " << expiryDatePad << "|" << endl;
+    cout << "| " << namePad << "| " << genericNamePad << "| " << supplierPad << "| " << batchIDPad << "| " << priceStr << "| " << quantityStr << "| " << expiryDatePad << "|";
+    
+    // Add warnings for near expiry and low stock
+    bool isNearExp = DateUtility::isNearExpiry(expiryDate);
+    bool isLowStock = quantity <= 15;
+    
+    if (isNearExp || isLowStock) {
+        cout << "\n|   WARNING: ";
+        if (isNearExp) cout << "Near expiry! ";
+        if (isLowStock) cout << "Low stock! ";
+        cout << string(71 - (isNearExp ? 12 : 0) - (isLowStock ? 11 : 0), ' ') << "|";
+    }
+    cout << endl;
+    
+    if (isNearExp || isLowStock) {
+        cout << "+----------------+----------------+---------------------+-----------+---------+---------+-------------+" << endl;
+    }
 }
 
 int Medicine::compareExpiryDate(const char* otherExpiryDate) const {

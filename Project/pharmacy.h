@@ -2,6 +2,7 @@
 #define PHARMACY_H
 
 #include "medicine.h"
+#include "notification.h"
 
 using namespace std;
 
@@ -15,6 +16,7 @@ class Pharmacy {
 private:
     Node* head;
     int medicineCount;
+    NotificationManager notificationManager;
 
     void printHeader();
     void printFooter();
@@ -38,6 +40,10 @@ public:
     Medicine* findMedicine(const char* name, const char* batchID);
     void updateMedicineQuantity(const char* name, const char* batchID, int quantityChange);
     void saveToFile(const char* filename);
+    
+    // Notification system methods
+    void checkAndDisplayNotifications();
+    int getNotificationCount() const { return notificationManager.getNotificationCount(); }
 };
 
 #endif // PHARMACY_H

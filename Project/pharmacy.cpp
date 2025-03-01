@@ -397,3 +397,21 @@ void Pharmacy::saveToFile(const char* filename) {
     }
     fclose(file);
 }
+
+void Pharmacy::checkAndDisplayNotifications() {
+    Node* current = head;
+    Medicine* medicines = new Medicine[medicineCount];
+    int index = 0;
+    
+    while (current) {
+        medicines[index++] = current->data;
+        current = current->next;
+    }
+    
+    notificationManager.clearNotifications();
+    notificationManager.checkExpiryDates(medicines, medicineCount);
+    notificationManager.checkLowStock(medicines, medicineCount);
+    notificationManager.displayNotifications();
+    
+    delete[] medicines;
+}

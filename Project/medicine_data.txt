@@ -14,7 +14,7 @@ Panadol Paracetamol XYZ_Suppliers B012 21.00 94 2024-12-05
 Aspirin Aspirin DEF_Medicals B013 10.00 200 2024-12-01
 Atorvastatin Atorvastatin XYZ_Suppliers B014 40.00 90 2024-11-22
 Cetirizine Cetirizine DEF_Medicals B015 8.00 130 2024-11-11
-Ibuprofen Ibuprofen XYZ_Suppliers B016 15.00 100 2024-11-05
+Ibuprofen Ibuprofen XYZ_Suppliers B016 15.00 5 2024-11-05
 Neutac Omeprazole XYZ_Suppliers B017 18.50 90 2024-11-04
 Ventolin Salbutamol XYZ_Suppliers B018 12.00 150 2024-10-23
 Napa_Extend Paracetamol ABC_Corp B019 20.00 50 2024-10-10
