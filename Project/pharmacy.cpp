@@ -1,6 +1,7 @@
 #include "pharmacy.h"
 #include <iostream>
 #include <cstdio>
+#include <cstring>
 
 using namespace std;
 
@@ -226,8 +227,24 @@ void Pharmacy::addMedicineToFile(const char* filename) {
     cin >> price;
     cout << "Enter quantity: ";
     cin >> quantity;
-    cout << "Enter expiry date (YYYY-MM-DD): ";
-    cin >> expiryDate;
+
+    bool validDate = false;
+    while (!validDate) {
+        cout << "Enter expiry date (YYYY-MM-DD): ";
+        cin >> expiryDate;
+
+        // Check date format
+        if (strlen(expiryDate) != 10 || 
+            expiryDate[4] != '-' || 
+            expiryDate[7] != '-' ||
+            !isdigit(expiryDate[0]) || !isdigit(expiryDate[1]) || !isdigit(expiryDate[2]) || !isdigit(expiryDate[3]) ||
+            !isdigit(expiryDate[5]) || !isdigit(expiryDate[6]) ||
+            !isdigit(expiryDate[8]) || !isdigit(expiryDate[9])) {
+            cout << "Invalid date format! Please use YYYY-MM-DD format.\n";
+        } else {
+            validDate = true;
+        }
+    }
 
     FILE* file = fopen(filename, "a");
     if (!file) {
@@ -374,6 +391,59 @@ void Pharmacy::updateMedicineQuantity(const char* name, const char* batchID, int
         }
         current = current->next;
     }
+}
+
+void Pharmacy::deleteMedicineFromList(const char* name, const char* batchID) {
+    if (!head) return;
+
+    // If the medicine to delete is the head
+    if (myStrcmp(head->data.getName(), name) == 0 &&
+        myStrcmp(head->data.getBatchID(), batchID) == 0) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+        medicineCount--;
+        return;
+    }
+
+    // Search for the medicine in the rest of the list
+    Node* current = head;
+    while (current->next) {
+        if (myStrcmp(current->next->data.getName(), name) == 0 &&
+            myStrcmp(current->next->data.getBatchID(), batchID) == 0) {
+            Node* temp = current->next;
+            current->next = current->next->next;
+            delete temp;
+            medicineCount--;
+            return;
+        }
+        current = current->next;
+    }
+}
+
+void Pharmacy::deleteMedicine(const char* filename) {
+    cout << "Enter the name of the medicine to delete: ";
+    char medName[50];
+    cin.ignore();
+    cin.getline(medName, 50);
+    cout << "Enter the batch ID: ";
+    char batchID[20];
+    cin.getline(batchID, 20);
+
+    // First, check if the medicine exists
+    Medicine* med = findMedicine(medName, batchID);
+    if (!med) {
+        cout << "Medicine not found!" << endl;
+        return;
+    }
+
+    // Delete from linked list
+    deleteMedicineFromList(medName, batchID);
+
+    // Update the file
+    saveToFile(filename);
+
+    cout << "Medicine deleted successfully!" << endl;
 }
 
 void Pharmacy::saveToFile(const char* filename) {

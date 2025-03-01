@@ -41,6 +41,10 @@ public:
     void updateMedicineQuantity(const char* name, const char* batchID, int quantityChange);
     void saveToFile(const char* filename);
     
+    // Delete medicine functionality
+    void deleteMedicine(const char* filename);
+    void deleteMedicineFromList(const char* name, const char* batchID);
+    
     // Notification system methods
     void checkAndDisplayNotifications();
     int getNotificationCount() const { 

@@ -15,7 +15,6 @@ int main() {
         // Display the title and main menu
         cout << "\n*\n";
         cout << "\n*\n";
-        cout << "\n*\n";
         cout << "\n==============================\n";
         setTextColorCyan();
 cout << "   Welcome to PHARMASYNC\n";
@@ -116,8 +115,8 @@ resetTextColor();
                     cout << "Update a medicine:\n";
                     pharmacy.updateMedicine("medicine_data.txt");
                 } else if (stockChoice == 3) {
-                    cout << "Sorry, delete functionality is not yet implemented.\n";
-                    cout << "Please choose another option.\n";
+                    cout << "Delete a medicine:\n";
+                    pharmacy.deleteMedicine("medicine_data.txt");
                 } else if (stockChoice == 4) {
                     break;
                 } else {
