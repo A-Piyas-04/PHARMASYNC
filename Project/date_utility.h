@@ -14,15 +14,18 @@ public:
             return false;
         }
 
+
         // Get current date
         time_t now = time(0);
         tm* ltm = localtime(&now);
         
+
         // Calculate date difference in months
         int monthsDiff = (year - (1900 + ltm->tm_year)) * 12 + (month - (1 + ltm->tm_mon));
         
         return monthsDiff <= monthsThreshold && monthsDiff >= 0;
     }
+
 
     static char* getCurrentDate() {
         static char date[11];

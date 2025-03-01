@@ -38,8 +38,10 @@ public:
     void checkExpiryDates(const Medicine* medicines, int count);
     void checkLowStock(const Medicine* medicines, int count);
     void displayNotifications();
+    void checkNotifications(const Medicine* medicines, int count);
     int getNotificationCount() const { return notificationCount; }
-    void clearNotifications() { notificationCount = 0; }
+    void clearNotifications();
+    int countPendingNotifications(const Medicine* medicines, int count);
 };
 
 #endif // NOTIFICATION_H

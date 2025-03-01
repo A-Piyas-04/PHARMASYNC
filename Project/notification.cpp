@@ -44,6 +44,16 @@ void NotificationManager::checkLowStock(const Medicine* medicines, int count) {
     }
 }
 
+void NotificationManager::clearNotifications() {
+    notificationCount = 0;
+}
+
+void NotificationManager::checkNotifications(const Medicine* medicines, int count) {
+    clearNotifications();
+    checkExpiryDates(medicines, count);
+    checkLowStock(medicines, count);
+}
+
 void NotificationManager::displayNotifications() {
     if (notificationCount == 0) {
         std::cout << "\nNo notifications to display.\n";
@@ -79,4 +89,25 @@ void NotificationManager::displayNotifications() {
     std::cout << "\nPress Enter to continue...";
     char input[2];
     std::cin.getline(input, 2);
+}
+
+int NotificationManager::countPendingNotifications(const Medicine* medicines, int count) {
+    int pendingCount = 0;
+    const char* currentDate = DateUtility::getCurrentDate();
+    
+    // Count expiry notifications
+    for (int i = 0; i < count; i++) {
+        if (DateUtility::isNearExpiry(medicines[i].getExpiryDate(), EXPIRY_MONTHS_THRESHOLD)) {
+            pendingCount++;
+        }
+    }
+    
+    // Count low stock notifications
+    for (int i = 0; i < count; i++) {
+        if (medicines[i].getQuantity() <= LOW_STOCK_THRESHOLD) {
+            pendingCount++;
+        }
+    }
+    
+    return pendingCount;
 }

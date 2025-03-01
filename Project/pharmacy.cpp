@@ -415,3 +415,18 @@ void Pharmacy::checkAndDisplayNotifications() {
     
     delete[] medicines;
 }
+
+int Pharmacy::countPendingNotifications() {
+    Medicine* medicines = new Medicine[medicineCount];
+    int index = 0;
+    
+    Node* current = head;
+    while (current) {
+        medicines[index++] = current->data;
+        current = current->next;
+    }
+    
+    int count = notificationManager.countPendingNotifications(medicines, medicineCount);
+    delete[] medicines;
+    return count;
+}

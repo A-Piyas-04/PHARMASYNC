@@ -43,7 +43,10 @@ public:
     
     // Notification system methods
     void checkAndDisplayNotifications();
-    int getNotificationCount() const { return notificationManager.getNotificationCount(); }
+    int getNotificationCount() const { 
+        return notificationManager.getNotificationCount(); 
+    }
+    int countPendingNotifications();
 };
 
 #endif // PHARMACY_H
