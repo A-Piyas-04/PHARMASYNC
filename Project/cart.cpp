@@ -6,12 +6,16 @@ using namespace std;
 
 void Cart::addItem(Medicine med, int quantity) {
     if (quantity <= 0) {
-        cout << "Invalid quantity. Please enter a positive number." << endl;
+        setTextColorLightViolet();
+cout << "Invalid quantity. Please enter a positive number." << endl;
+resetTextColor();
         return;
     }
 
     if (quantity > med.getQuantity()) {
-        cout << "Error: Not enough stock available. Available quantity: " << med.getQuantity() << endl;
+        setTextColorLightViolet();
+cout << "Error: Not enough stock available. Available quantity: " << med.getQuantity() << endl;
+resetTextColor();
         return;
     }
 
@@ -22,7 +26,9 @@ void Cart::addItem(Medicine med, int quantity) {
 
 void Cart::displayCart() {
     if (items.empty()) {
-        cout << "Cart is empty." << endl;
+        setTextColorLightViolet();
+cout << "Cart is empty." << endl;
+resetTextColor();
         return;
     }
 
@@ -47,37 +53,46 @@ void Cart::displayCart() {
 }
 
 void Cart::printReceipt() {
+    time_t now = time(0);
+    char currentDate[11];
+    strftime(currentDate, sizeof(currentDate), "%Y-%m-%d", localtime(&now));
+    printReceipt(currentDate);
+}
+
+void Cart::printReceipt(const char* date) {
     if (items.empty()) {
-        cout << "No items to print receipt for." << endl;
+        setTextColorLightViolet();
+cout << "No items to print receipt for." << endl;
+resetTextColor();
         return;
     }
 
     cout << "\n";
+    cout << "+======================================================================+" << endl;
     setTextColorCyan();
-    cout << "==================== PHARMASYNC RECEIPT ====================" << endl;
+    cout << "|                      PHARMASYNC RECEIPT                              |" << endl;
     resetTextColor();
-    cout << "Date: [Current Date]" << endl;
-    cout << "==============================================================" << endl;
-
-    // Header with consistent column widths
-    cout << left << setw(30) << "Medicine"
-         << right << setw(5) << "Qty"
+    cout << "|  ------------------------------------------------------------------  |" << endl;
+    cout << "|  Date: " << left << setw(58) << date << "    |" << endl;
+    cout << "|  ------------------------------------------------------------------  |" << endl;
+    cout << "|  " << left << setw(20) << "Medicine"
+         << left << setw(15) << "Batch ID"
+         << right << setw(10) << "Qty"
          << right << setw(12) << "Price"
-         << right << setw(12) << "Subtotal" << endl;
-    cout << string(59, '-') << endl;
+         << right << setw(10) << "Total" << " |" << endl;
+    cout << "|  ------------------------------------------------------------------  |" << endl;
 
-    // Print items with consistent decimal places and alignment
     for (const CartItem& item : items) {
-        cout << left << setw(30) << item.medicine.getName()
-             << right << setw(5) << item.quantity
-             << right << setw(12) << "$" + to_string(item.medicine.getPrice()).substr(0, to_string(item.medicine.getPrice()).find(".") + 3)
-             << right << setw(12) << "$" + to_string(item.subtotal).substr(0, to_string(item.subtotal).find(".") + 3) << endl;
+        cout << "|  " << left << setw(20) << item.medicine.getName()
+             << left << setw(15) << item.medicine.getBatchID()
+             << right << setw(10) << item.quantity
+             << right << setw(12) << fixed << setprecision(2) << item.medicine.getPrice()
+             << right << setw(10) << item.subtotal << " |" << endl;
     }
 
-    // Footer with proper alignment
-    cout << string(59, '-') << endl;
-    cout << right << setw(47) << "Subtotal: $" << fixed << setprecision(2) << total << endl;
-    cout << "==============================================================" << endl;
-    cout << setw(35) << right << "     Thank you for shopping!" << endl;
-    cout << "==============================================================" << endl;
+    cout << "|                                                                      |" << endl;
+    cout << "|                                    Total:  " << left << setw(8) << fixed << setprecision(2) << total << "                  |" << endl;
+    cout << "+======================================================================+" << endl;
+    cout << "|                      Thank you for shopping!                         |" << endl;
+    cout << "+======================================================================+" << endl;
 }

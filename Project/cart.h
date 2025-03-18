@@ -22,6 +22,7 @@ public:
     Cart() : total(0.0f) {}
 
     void addItem(Medicine med, int quantity);
+    void printReceipt(const char* date);
     void displayCart();
     void printReceipt();
     float getTotal() const { return total; }
