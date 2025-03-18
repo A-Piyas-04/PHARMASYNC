@@ -1,1 +1,1 @@
-g++ main.cpp medicine.cpp supplier_ranks.cpp cart.cpp notification.cpp pharmacy.cpp transaction.cpp utility.cpp -o pharmacy.exe
+g++ main.cpp pharmacy.cpp medicine.cpp supplier_ranks.cpp cart.cpp notification.cpp transaction.cpp utility.cpp -o pharmacy.exe
