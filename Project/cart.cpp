@@ -26,7 +26,10 @@ void Cart::displayCart() {
         return;
     }
 
-    cout << "\n=== Shopping Cart ===" << endl;
+    cout << "\n";
+    setTextColorCyan();
+    cout << "=== Shopping Cart ===" << endl;
+    resetTextColor();
     cout << "+----------------+----------------+---------+---------+-----------+" << endl;
     cout << "| Medicine Name  | Generic Name   | Price   |Quantity | Subtotal  |" << endl;
     cout << "+----------------+----------------+---------+---------+-----------+" << endl;
@@ -49,7 +52,10 @@ void Cart::printReceipt() {
         return;
     }
 
-    cout << "\n==================== PHARMASYNC RECEIPT ====================" << endl;
+    cout << "\n";
+    setTextColorCyan();
+    cout << "==================== PHARMASYNC RECEIPT ====================" << endl;
+    resetTextColor();
     cout << "Date: [Current Date]" << endl;
     cout << "==============================================================" << endl;
 
