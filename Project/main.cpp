@@ -147,8 +147,9 @@ resetTextColor();
                 cout << "1. Add Medicine to Cart\n";
                 cout << "2. View Cart\n";
                 cout << "3. Checkout\n";
-                cout << "4. View Selling History\n";
-                cout << "5. Go Back\n";
+                cout << "4. Empty Cart\n";
+                cout << "5. View Selling History\n";
+                cout << "6. Go Back\n";
                 cout << "Enter your choice: ";
                 int sellChoice;
                 cin >> sellChoice;
@@ -200,13 +201,20 @@ resetTextColor();
                         cout << "Cart is empty!\n";
                     }
                 } else if (sellChoice == 4) {
+                    if (cart.getTotal() > 0) {
+                        cart.clear();
+                        cout << "Cart has been emptied successfully!\n";
+                    } else {
+                        cout << "Cart is already empty!\n";
+                    }
+                } else if (sellChoice == 5) {
                     Transaction::displayTransactionHistory();
                     cout << "\nPress Enter to continue...";
                     cin.ignore();
                     cin.get();
-                } else if (sellChoice == 5) {
+                } else if (sellChoice == 6) {
                     break;
-                } else {
+                } else if (sellChoice > 6) {
                     cout << "Invalid choice. Please try again.\n";
                 }
             }

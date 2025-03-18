@@ -8,12 +8,12 @@ Atorvastatin Atorvastatin XYZ_Suppliers B014 40.00 90 2024-11-22
 Panadol Paracetamol XYZ_Suppliers B012 21.00 90 2024-12-05
 Metformin Metformin ABC_Corp B006 5.00 90 2025-03-15
 FastPlus Paracetamol QRS B001 20.00 89 2026-01-31
-Sergel Esomeprazole DEF_Medicals B007 25.00 80 2025-03-01
-FastPlus Paracetamol QRS B002 20.00 71 2026-01-31
+Sergel Esomeprazole DEF_Medicals B007 25.00 65 2025-03-01
+FastPlus Paracetamol QRS B002 20.00 70 2026-01-31
 Synthroid Levothyroxine DEF_Medicals B004 50.00 60 2025-05-11
 Neutac Omeprazole XYZ_Suppliers B017 18.50 58 2024-11-04
 Napa_Extend Paracetamol ABC_Corp B019 20.00 50 2024-10-10
-Nexium Esomeprazole ABC_Corp B005 55.00 34 2025-04-19
+Nexium Esomeprazole ABC_Corp B005 55.00 31 2025-04-19
 Xarelto Rivaroxaban ABC_Corp B009 100.00 40 2025-01-01
 Risperidone Risperidone ABC_Corp B011 45.00 35 2024-12-20
 Ibuprofen Ibuprofen XYZ_Suppliers B016 15.00 5 2024-11-05
