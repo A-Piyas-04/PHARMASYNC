@@ -15,6 +15,7 @@ void trim(char* str);
 void setTextColorRed();
 void setTextColorDarkYellow();
 void setTextColorCyan();
+void setTextColorLightViolet();
 void resetTextColor();
 
 #endif // UTILITY_H

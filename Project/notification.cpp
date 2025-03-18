@@ -56,7 +56,9 @@ void NotificationManager::checkNotifications(const Medicine* medicines, int coun
 
 void NotificationManager::displayNotifications() {
     if (notificationCount == 0) {
-        std::cout << "\nNo notifications to display.\n";
+        setTextColorLightViolet();
+std::cout << "\nNo notifications to display.\n";
+resetTextColor();
         return;
     }
 
@@ -76,7 +78,11 @@ void NotificationManager::displayNotifications() {
             hasExpiry = true;
         }
     }
-    if (!hasExpiry) std::cout << "No expiry alerts\n";
+    if (!hasExpiry) {
+    setTextColorLightViolet();
+    std::cout << "No expiry alerts\n";
+    resetTextColor();
+}
 
     // Then display stock notifications
     std::cout << "\nLow Stock Alerts:\n";
@@ -88,7 +94,11 @@ void NotificationManager::displayNotifications() {
             hasStock = true;
         }
     }
-    if (!hasStock) std::cout << "No low stock alerts\n";
+    if (!hasStock) {
+    setTextColorLightViolet();
+    std::cout << "No low stock alerts\n";
+    resetTextColor();
+}
     
     std::cout << "\nPress Enter to continue...";
     char input[2];

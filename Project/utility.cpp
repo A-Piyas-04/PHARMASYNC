@@ -15,12 +15,20 @@ void myStrcpy(char* destination, const char* source) {
 int myStrcmp(const char* str1, const char* str2) {
     int i = 0;
     while (str1[i] != '\0' && str2[i] != '\0') {
-        if (str1[i] != str2[i]) {
-            return str1[i] - str2[i];
+        char c1 = str1[i];
+        char c2 = str2[i];
+        if (c1 >= 'A' && c1 <= 'Z') c1 += 32;
+        if (c2 >= 'A' && c2 <= 'Z') c2 += 32;
+        if (c1 != c2) {
+            return c1 - c2;
         }
         i++;
     }
-    return str1[i] - str2[i];
+    char c1 = str1[i];
+    char c2 = str2[i];
+    if (c1 >= 'A' && c1 <= 'Z') c1 += 32;
+    if (c2 >= 'A' && c2 <= 'Z') c2 += 32;
+    return c1 - c2;
 }
 
 int myStrlen(const char* str) {
@@ -94,6 +102,10 @@ void setTextColorDarkYellow() {
 
 void setTextColorCyan() {
     cout << "\033[96m";
+}
+
+void setTextColorLightViolet() {
+    cout << "\033[95m";
 }
 
 void resetTextColor() {

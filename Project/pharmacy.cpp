@@ -19,7 +19,9 @@ Pharmacy::~Pharmacy() {
 void Pharmacy::loadData(const char* filename) {
     FILE* file = fopen(filename, "r");
     if (!file) {
-        cout << "Error opening file!" << endl;
+        setTextColorLightViolet();
+cout << "Error opening file!" << endl;
+resetTextColor();
         return;
     }
 
@@ -149,7 +151,9 @@ void Pharmacy::searchMedicine() {
     }
 
     if (!found) {
-        cout << "| No medicines found matching '" << searchTerm << "' |" << endl;
+        setTextColorLightViolet();
+cout << "| No medicines found matching '" << searchTerm << "' |" << endl;
+resetTextColor();
     }
 
     printFooter();
@@ -204,7 +208,9 @@ void Pharmacy::filterByQuantity(int minQty, int maxQty) {
         current = current->next;
     }
     if (!found) {
-        cout << "| No medicines found within the specified quantity range |" << endl;
+        setTextColorLightViolet();
+cout << "| No medicines found within the specified quantity range |" << endl;
+resetTextColor();
     }
     printFooter();
 }
@@ -240,7 +246,9 @@ void Pharmacy::addMedicineToFile(const char* filename) {
             !isdigit(expiryDate[0]) || !isdigit(expiryDate[1]) || !isdigit(expiryDate[2]) || !isdigit(expiryDate[3]) ||
             !isdigit(expiryDate[5]) || !isdigit(expiryDate[6]) ||
             !isdigit(expiryDate[8]) || !isdigit(expiryDate[9])) {
-            cout << "Invalid date format! Please use YYYY-MM-DD format.\n";
+            setTextColorLightViolet();
+cout << "Invalid date format! Please use YYYY-MM-DD format.\n";
+resetTextColor();
         } else {
             validDate = true;
         }
@@ -248,7 +256,9 @@ void Pharmacy::addMedicineToFile(const char* filename) {
 
     FILE* file = fopen(filename, "a");
     if (!file) {
-        cout << "Error opening file for writing!" << endl;
+        setTextColorLightViolet();
+cout << "Error opening file for writing!" << endl;
+resetTextColor();
         return;
     }
     fprintf(file, "%s %s %s %s %.2f %d %s\n", name, genericName, supplier, batchID, price, quantity, expiryDate);
@@ -257,7 +267,9 @@ void Pharmacy::addMedicineToFile(const char* filename) {
     Medicine newMedicine(name, genericName, supplier, batchID, price, quantity, expiryDate);
     addMedicine(newMedicine);
     
-    cout << "Medicine added successfully!" << endl;
+    setTextColorLightViolet();
+cout << "Medicine added successfully!" << endl;
+resetTextColor();
 }
 
 void Pharmacy::updateMedicine(const char* filename) {
@@ -266,7 +278,9 @@ void Pharmacy::updateMedicine(const char* filename) {
     cin >> updateChoice;
 
     if (updateChoice != 1 && updateChoice != 2) {
-        cout << "Invalid choice!" << endl;
+        setTextColorLightViolet();
+cout << "Invalid choice!" << endl;
+resetTextColor();
         return;
     }
 
@@ -282,7 +296,9 @@ void Pharmacy::updateMedicine(const char* filename) {
    
     FILE* tempFile = fopen("temp_medicine_data.txt", "w");
     if (!tempFile) {
-        cout << "Error opening temporary file for writing!" << endl;
+        setTextColorLightViolet();
+cout << "Error opening temporary file for writing!" << endl;
+resetTextColor();
         return;
     }
 
@@ -327,9 +343,13 @@ void Pharmacy::updateMedicine(const char* filename) {
     rename("temp_medicine_data.txt", filename);
 
     if (found) {
-        cout << "Medicine '" << medName << "' with batch ID '" << batchID << "' updated successfully!" << endl;
+        setTextColorLightViolet();
+cout << "Medicine '" << medName << "' with batch ID '" << batchID << "' updated successfully!" << endl;
+resetTextColor();
     } else {
-        cout << "Medicine '" << medName << "' with batch ID '" << batchID << "' not found!" << endl;
+        setTextColorLightViolet();
+cout << "Medicine '" << medName << "' with batch ID '" << batchID << "' not found!" << endl;
+resetTextColor();
     }
 }
 
@@ -362,7 +382,9 @@ void Pharmacy::searchBySupplier() {
     }
 
     if (!found) {
-        cout << "| No medicines found matching supplier '" << searchTerm << "' |" << endl;
+        setTextColorLightViolet();
+cout << "| No medicines found matching supplier '" << searchTerm << "' |" << endl;
+resetTextColor();
     }
 
     printFooter();
@@ -433,7 +455,9 @@ void Pharmacy::deleteMedicine(const char* filename) {
     // First, check if the medicine exists
     Medicine* med = findMedicine(medName, batchID);
     if (!med) {
-        cout << "Medicine not found!" << endl;
+        setTextColorLightViolet();
+cout << "Medicine not found!" << endl;
+resetTextColor();
         return;
     }
 
@@ -443,13 +467,17 @@ void Pharmacy::deleteMedicine(const char* filename) {
     // Update the file
     saveToFile(filename);
 
-    cout << "Medicine deleted successfully!" << endl;
+    setTextColorLightViolet();
+cout << "Medicine deleted successfully!" << endl;
+resetTextColor();
 }
 
 void Pharmacy::saveToFile(const char* filename) {
     FILE* file = fopen(filename, "w");
     if (!file) {
-        cout << "Error opening file for writing!" << endl;
+        setTextColorLightViolet();
+cout << "Error opening file for writing!" << endl;
+resetTextColor();
         return;
     }
 
