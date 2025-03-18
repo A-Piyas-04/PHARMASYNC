@@ -15,21 +15,26 @@ void Transaction::writeTransactionToFile(const Cart& cart, const char* date) {
         return;
     }
 
-    // Write transaction header
-    fprintf(file, "\n=== Transaction Date: %s ===\n", date);
+    // Write transaction box top
+    fprintf(file, "\n+====================================================================+\n");
+    fprintf(file,   "|                    Transaction Date: %-10s                    |\n", date);
+    fprintf(file,   "+====================================================================+\n");
+    fprintf(file,   "|  Item                    Batch ID    Quantity    Price (RM)        |\n");
+    fprintf(file,   "|  ----------------------------------------------------------------  |\n");
     
     // Write items
     for (const CartItem& item : cart.getItems()) {
-        fprintf(file, "%s(%s) - %d --> %.2f\n",
+        fprintf(file, "|  %-20s    %-8s    %8d    %10.2f        |\n",
             item.medicine.getName(),
             item.medicine.getBatchID(),
             item.quantity,
             item.subtotal);
     }
     
-    // Write total
-    fprintf(file, "Total : %.2f\n", cart.getTotal());
-    fprintf(file, "====================================\n");
+    // Write empty line and total
+    fprintf(file, "|                                                                    |\n");
+    fprintf(file, "|                                    Total: RM %-9.2f             |\n", cart.getTotal());
+    fprintf(file, "+====================================================================+\n");
     
     fclose(file);
 }
