@@ -32,7 +32,10 @@ resetTextColor();
         if (mainChoice == 1) {
             // View Medicine Menu
             int viewChoice;
+            
+            setTextColorCyan();
             cout << "\n--- View Medicine ---\n";
+            resetTextColor();
             cout << "1. View All Medicines\n";
             cout << "2. Search Medicine\n";
             cout << "3. Sort Medicines\n";
@@ -66,7 +69,10 @@ resetTextColor();
 
             } else if (viewChoice == 4) {
                 int filterChoice;
+                
+                setTextColorCyan();
                 cout << "\n--- Filter Options ---\n";
+                resetTextColor();
                 cout << "1. Filter by Quantity\n";
                 cout << "2. Filter by Supplier\n";
                 cout << "Enter your choice: ";
@@ -108,15 +114,24 @@ resetTextColor();
                 cin >> stockChoice;
 
                 if (stockChoice == 1) {
+                    
+                    setTextColorCyan();
                     cout << "Adding a new medicine:\n";
+                    resetTextColor();
                     pharmacy.addMedicineToFile("medicine_data.txt");
                     cout << "\nUpdated Medicines:\n";
                     pharmacy.displayAllMedicines();
                 } else if (stockChoice == 2) {
+                 
+                    setTextColorCyan();
                     cout << "Update a medicine:\n";
+                    resetTextColor();
                     pharmacy.updateMedicine("medicine_data.txt");
                 } else if (stockChoice == 3) {
+                    
+                    setTextColorCyan();
                     cout << "Delete a medicine:\n";
+                    resetTextColor();
                     pharmacy.deleteMedicine("medicine_data.txt");
                 } else if (stockChoice == 4) {
                     break;

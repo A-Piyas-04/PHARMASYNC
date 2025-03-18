@@ -20,17 +20,16 @@ void Transaction::writeTransactionToFile(const Cart& cart, const char* date) {
     
     // Write items
     for (const CartItem& item : cart.getItems()) {
-        fprintf(file, "%s|%s|%d|%.2f|%.2f\n",
+        fprintf(file, "%s(%s) - %d --> %.2f\n",
             item.medicine.getName(),
             item.medicine.getBatchID(),
             item.quantity,
-            item.medicine.getPrice(),
             item.subtotal);
     }
     
     // Write total
-    fprintf(file, "Total: %.2f\n", cart.getTotal());
-    fprintf(file, "================================\n");
+    fprintf(file, "Total : %.2f\n", cart.getTotal());
+    fprintf(file, "====================================\n");
     
     fclose(file);
 }
