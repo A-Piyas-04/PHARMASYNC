@@ -444,7 +444,10 @@ void Pharmacy::deleteMedicineFromList(const char* name, const char* batchID) {
 }
 
 void Pharmacy::deleteMedicine(const char* filename) {
-    cout << "Enter the name of the medicine to delete: ";
+    cout << "\nCurrent Medicine List:\n";
+    displayAllMedicines();
+
+    cout << "\nEnter the name of the medicine to delete: ";
     char medName[50];
     cin.ignore();
     cin.getline(medName, 50);

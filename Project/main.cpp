@@ -14,8 +14,7 @@ int main() {
 
     while (true) {
         // Display the title and main menu
-        cout << "\n*\n";
-        cout << "\n*\n";
+        cout << "\n\n";
         cout << "\n==============================\n";
         setTextColorCyan();
 cout << "   Welcome to PHARMASYNC\n";
