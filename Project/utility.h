@@ -16,6 +16,7 @@ void setTextColorRed();
 void setTextColorDarkYellow();
 void setTextColorCyan();
 void setTextColorLightViolet();
+void setTextColorLightGreen();
 void resetTextColor();
 
 #endif // UTILITY_H

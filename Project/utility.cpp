@@ -108,6 +108,10 @@ void setTextColorLightViolet() {
     cout << "\033[95m";
 }
 
+void setTextColorLightGreen() {
+    cout << "\033[92m";
+}
+
 void resetTextColor() {
     cout << "\033[0m";
 }
