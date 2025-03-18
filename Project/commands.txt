@@ -1,2 +1,3 @@
 g++ main.cpp pharmacy.cpp medicine.cpp supplier_ranks.cpp cart.cpp notification.cpp transaction.cpp utility.cpp -o pharmacy.exe
-g++ -o pharmacy_test.exe Tests/pharmacy_test.cpp medicine.cpp pharmacy.cpp cart.cpp notification.cpp utility.cpp
+g++ -o pharmacy_test.exe Tests/pharmacy_test.cpp pharmacy.cpp medicine.cpp cart.cpp notification.cpp supplier_ranks.cpp utility.cpp
+./pharmacy_test.exe 
