@@ -93,12 +93,16 @@ resetTextColor();
                 } else if (filterChoice == 2) {
                     pharmacy.searchBySupplier();
                 } else {
-                    cout << "Invalid filter choice. Please try again.\n";
+                    setTextColorLightViolet();
+cout << "Invalid filter choice. Please try again.\n";
+resetTextColor();
                 }
             } else if (viewChoice == 5) {
                 continue;
             } else {
-                cout << "Invalid choice. Please try again.\n";
+                setTextColorLightViolet();
+cout << "Invalid choice. Please try again.\n";
+resetTextColor();
             }
 
         } else if (mainChoice == 2) {
@@ -136,7 +140,9 @@ resetTextColor();
                 } else if (stockChoice == 4) {
                     break;
                 } else {
-                    cout << "Invalid choice. Please try again.\n";
+                    setTextColorLightViolet();
+cout << "Invalid choice. Please try again.\n";
+resetTextColor();
                 }
             }
 
@@ -172,10 +178,14 @@ resetTextColor();
                     if (med != nullptr) {
                         cart.addItem(*med, quantity);
                         if (quantity <= med->getQuantity()) {
-                            cout << "Medicine added to cart successfully!\n";
+                            setTextColorLightViolet();
+cout << "Medicine added to cart successfully!\n";
+resetTextColor();
                         }
                     } else {
-                        cout << "Medicine not found!\n";
+                        setTextColorLightViolet();
+cout << "Medicine not found!\n";
+resetTextColor();
                     }
                 } else if (sellChoice == 2) {
                     cart.displayCart();
@@ -198,14 +208,20 @@ resetTextColor();
                         cart.clear();
                         cout << "\nThank you for your purchase!\n";
                     } else {
-                        cout << "Cart is empty!\n";
+                        setTextColorLightViolet();
+cout << "Cart is empty!\n";
+resetTextColor();
                     }
                 } else if (sellChoice == 4) {
                     if (cart.getTotal() > 0) {
                         cart.clear();
-                        cout << "Cart has been emptied successfully!\n";
+                        setTextColorLightViolet();
+cout << "Cart has been emptied successfully!\n";
+resetTextColor();
                     } else {
-                        cout << "Cart is already empty!\n";
+                        setTextColorLightViolet();
+cout << "Cart is already empty!\n";
+resetTextColor();
                     }
                 } else if (sellChoice == 5) {
                     Transaction::displayTransactionHistory();
@@ -215,7 +231,9 @@ resetTextColor();
                 } else if (sellChoice == 6) {
                     break;
                 } else if (sellChoice > 6) {
-                    cout << "Invalid choice. Please try again.\n";
+                    setTextColorLightViolet();
+cout << "Invalid choice. Please try again.\n";
+resetTextColor();
                 }
             }
         } else if (mainChoice == 4) {
@@ -225,7 +243,9 @@ resetTextColor();
             cout << "Thank you for using PHARMASYNC\n";
             break;
         } else {
-            cout << "Invalid choice. Please try again.\n";
+            setTextColorLightViolet();
+cout << "Invalid choice. Please try again.\n";
+resetTextColor();
         }
     }
 
