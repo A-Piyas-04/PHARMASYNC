@@ -11,7 +11,9 @@ void Transaction::recordTransaction(const Cart& cart, const char* date) {
 void Transaction::writeTransactionToFile(const Cart& cart, const char* date) {
     FILE* file = fopen(TRANSACTION_FILE, "a");
     if (!file) {
-        std::cout << "Error opening transaction file for writing!" << std::endl;
+        setTextColorLightViolet();
+std::cout << "Error opening transaction file for writing!" << std::endl;
+resetTextColor();
         return;
     }
 
@@ -42,7 +44,9 @@ void Transaction::writeTransactionToFile(const Cart& cart, const char* date) {
 void Transaction::displayTransactionHistory() {
     FILE* file = fopen(TRANSACTION_FILE, "r");
     if (!file) {
-        std::cout << "No transaction history found." << std::endl;
+        setTextColorLightViolet();
+std::cout << "No transaction history found." << std::endl;
+resetTextColor();
         return;
     }
 
