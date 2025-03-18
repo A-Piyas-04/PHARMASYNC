@@ -200,11 +200,13 @@ resetTextColor();
                         strftime(currentDate, sizeof(currentDate), "%Y-%m-%d", localtime(&now));
                         // Record transaction
                         Transaction::recordTransaction(cart, currentDate);
-                        // Update stock
+                        // Update stock and supplier rankings
                         for (const CartItem& item : cart.getItems()) {
                             pharmacy.updateMedicineQuantity(item.medicine.getName(), 
                                                           item.medicine.getBatchID(), 
                                                           -item.quantity);
+                            // Update supplier sales count
+                            supplierRanking.updateSupplierSales(item.medicine.getSupplier(), item.quantity);
                         }
                         pharmacy.saveToFile("medicine_data.txt");
                         cart.clear();
@@ -242,7 +244,7 @@ resetTextColor();
             pharmacy.checkAndDisplayNotifications();
             cin.ignore(); // Clear any remaining newline characters
         } else if (mainChoice == 5) {
-            supplierRanking.displayRanking();
+            supplierRanking.displayRankings();
         } else if (mainChoice == 6) {
             cout << "Thank you for using PHARMASYNC\n";
             break;

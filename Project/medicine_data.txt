@@ -23,7 +23,7 @@ Moxacil Amoxicillin Incepta B012 15.00 160 2025-09-30
 Tufnil Paracetamol Popular B013 11.00 200 2025-11-20
 Ranitid Ranitidine Square B014 20.00 140 2025-08-15
 Xcel Cetirizine Healthcare B015 12.00 150 2025-07-25
-Ace Paracetamol Square B016 12.00 175 2025-12-10
+Ace Paracetamol Square B016 12.00 165 2025-12-10
 Napa_Extra Paracetamol Beximco B017 15.00 170 2025-11-15
 Omiren Omeprazole Renata B018 30.00 130 2025-10-05
 Cef-3 Cefixime Incepta B019 45.00 80 2025-09-20

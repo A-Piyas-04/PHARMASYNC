@@ -1,34 +1,23 @@
 #ifndef SUPPLIER_RANKS_H
 #define SUPPLIER_RANKS_H
 
-#include <iostream>
-#include <cstring>
-#include <vector>
-#include "utility.h"
-
-struct SupplierRank {
-    char supplier[50];
-    int salesCount;
-
-    SupplierRank(const char* sup, int count = 0) {
-        strcpy(supplier, sup);
-        salesCount = count;
-    }
-};
+using namespace std;
 
 class SupplierRanking {
 private:
-    static const char* SUPPLIER_RANKS_FILE;
-    std::vector<SupplierRank> ranks;
+    static const int MAX_SUPPLIERS = 50;
+    char suppliers[MAX_SUPPLIERS][50];
+    int salesCount[MAX_SUPPLIERS];
+    int supplierCount;
 
-    void loadRanks();
-    void saveRanks() const;
-    int findSupplierIndex(const char* supplier) const;
+    void loadRankings();
+    void saveRankings();
+    int findSupplierIndex(const char* supplier);
 
 public:
     SupplierRanking();
-    void incrementSales(const char* supplier, int quantity = 1);
-    void displayRanking() const;
+    void updateSupplierSales(const char* supplier, int quantity);
+    void displayRankings();
 };
 
 #endif

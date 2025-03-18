@@ -1,83 +1,106 @@
 #include "supplier_ranks.h"
-#include <algorithm>
 #include <fstream>
+#include <cstring>
+#include <iostream>
+#include "utility.h"
 
-const char* SupplierRanking::SUPPLIER_RANKS_FILE = "supplier_ranks.txt";
-
-SupplierRanking::SupplierRanking() {
-    loadRanks();
+SupplierRanking::SupplierRanking() : supplierCount(0) {
+    loadRankings();
 }
 
-void SupplierRanking::loadRanks() {
-    std::ifstream file(SUPPLIER_RANKS_FILE);
-    if (!file) return;
-
-    char supplier[50];
-    int count;
-    while (file >> supplier >> count) {
-        ranks.push_back(SupplierRank(supplier, count));
-    }
-    file.close();
-}
-
-void SupplierRanking::saveRanks() const {
-    std::ofstream file(SUPPLIER_RANKS_FILE);
+void SupplierRanking::loadRankings() {
+    std::ifstream file("supplier_ranks.txt");
     if (!file) {
-        setTextColorLightViolet();
-        std::cout << "Error saving supplier ranks!" << std::endl;
-        resetTextColor();
         return;
     }
 
-    for (const auto& rank : ranks) {
-        file << rank.supplier << " " << rank.salesCount << std::endl;
+    char line[100];
+    supplierCount = 0;
+
+    // Skip header lines
+    for (int i = 0; i < 4; i++) {
+        file.getline(line, sizeof(line));
+    }
+
+    while (file.getline(line, sizeof(line)) && supplierCount < MAX_SUPPLIERS) {
+        if (line[0] == '+' || strlen(line) < 2) continue;
+
+        char* token = strtok(line, "|");
+        if (token) {
+            // Trim whitespace
+            while (*token == ' ') token++;
+            strcpy(suppliers[supplierCount], token);
+            
+            token = strtok(NULL, "|");
+            if (token) {
+                salesCount[supplierCount] = atoi(token);
+            }
+            supplierCount++;
+        }
     }
     file.close();
 }
 
-int SupplierRanking::findSupplierIndex(const char* supplier) const {
-    for (size_t i = 0; i < ranks.size(); i++) {
-        if (strcmp(ranks[i].supplier, supplier) == 0) {
+void SupplierRanking::saveRankings() {
+    std::ofstream file("supplier_ranks.txt");
+    if (!file) return;
+
+    file << "+====================================+\n";
+    file << "|         SUPPLIER RANKINGS          |\n";
+    file << "+====================================+\n";
+    file << "| Supplier           | Sales Count   |\n";
+    file << "+------------------------------------+\n";
+
+    for (int i = 0; i < supplierCount; i++) {
+        file << "| " << suppliers[i];
+        for (int j = strlen(suppliers[i]); j < 17; j++) file << " ";
+        file << "| " << salesCount[i];
+        for (int j = std::to_string(salesCount[i]).length(); j < 12; j++) file << " ";
+        file << "|\n";
+    }
+
+    file << "+====================================+\n";
+    file.close();
+}
+
+int SupplierRanking::findSupplierIndex(const char* supplier) {
+    for (int i = 0; i < supplierCount; i++) {
+        if (strcmp(suppliers[i], supplier) == 0) {
             return i;
         }
+    }
+    
+    if (supplierCount < MAX_SUPPLIERS) {
+        strcpy(suppliers[supplierCount], supplier);
+        salesCount[supplierCount] = 0;
+        return supplierCount++;
     }
     return -1;
 }
 
-void SupplierRanking::incrementSales(const char* supplier, int quantity) {
+void SupplierRanking::updateSupplierSales(const char* supplier, int quantity) {
     int index = findSupplierIndex(supplier);
-    if (index >= 0) {
-        ranks[index].salesCount += quantity;
-    } else {
-        ranks.push_back(SupplierRank(supplier, quantity));
+    if (index != -1) {
+        salesCount[index] += quantity;
+        saveRankings();
     }
-    saveRanks();
 }
 
-void SupplierRanking::displayRanking() const {
-    if (ranks.empty()) {
-        setTextColorLightViolet();
-        std::cout << "No supplier rankings available yet." << std::endl;
-        resetTextColor();
-        return;
+void SupplierRanking::displayRankings() {
+    std::ifstream file("supplier_ranks.txt");
+    if (!file) return;
+
+    char line[100];
+    bool isTitle = false;
+    while (file.getline(line, sizeof(line))) {
+        if (strstr(line, "SUPPLIER RANKINGS")) {
+            setTextColorLightGreen();
+            std::cout << line << std::endl;
+            resetTextColor();
+            isTitle = true;
+        } else {
+            std::cout << line << std::endl;
+        }
     }
-
-    std::vector<SupplierRank> sortedRanks = ranks;
-    std::sort(sortedRanks.begin(), sortedRanks.end(),
-              [](const SupplierRank& a, const SupplierRank& b) {
-                  return a.salesCount > b.salesCount;
-              });
-
-    std::cout << "\n+====================================+" << std::endl;
-    setTextColorCyan();
-    std::cout << "|         SUPPLIER RANKINGS          |" << std::endl;
-    resetTextColor();
-    std::cout << "+====================================+" << std::endl;
-    std::cout << "| Supplier           | Sales Count  |" << std::endl;
-    std::cout << "+------------------------------------+" << std::endl;
-
-    for (const auto& rank : sortedRanks) {
-        printf("| %-18s | %-11d |\n", rank.supplier, rank.salesCount);
-    }
-    std::cout << "+====================================+" << std::endl;
+    file.close();
 }
