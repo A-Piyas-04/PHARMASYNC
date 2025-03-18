@@ -60,7 +60,11 @@ void NotificationManager::displayNotifications() {
         return;
     }
 
-    std::cout << "\n=== Notifications (" << notificationCount << ") ===\n";
+    std::cout << "\n";
+    setTextColorCyan();
+    cout << "=== Notifications (" << notificationCount << ") ===" << endl;
+    resetTextColor();
+    cout << "+----------------+----------------+---------------------+" << endl;
     
     // Display expiry notifications first
     std::cout << "\nExpiry Alerts:\n";
