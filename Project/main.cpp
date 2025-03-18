@@ -210,9 +210,6 @@ resetTextColor();
                     cout << "Invalid choice. Please try again.\n";
                 }
             }
-        } else if (mainChoice == 4) {
-            pharmacy.checkAndDisplayNotifications();
-            cin.ignore(); // Clear any remaining newline characters
         } else if (mainChoice == 5) {
             cout << "Thank you for using PHARMASYNC\n";
             break;
