@@ -1,5 +1,6 @@
 #include "pharmacy.h"
 #include "cart.h"
+#include "transaction.h"
 #include <iostream>
 
 using namespace std;
@@ -131,7 +132,8 @@ resetTextColor();
                 cout << "1. Add Medicine to Cart\n";
                 cout << "2. View Cart\n";
                 cout << "3. Checkout\n";
-                cout << "4. Go Back\n";
+                cout << "4. View Selling History\n";
+                cout << "5. Go Back\n";
                 cout << "Enter your choice: ";
                 int sellChoice;
                 cin >> sellChoice;
@@ -164,6 +166,12 @@ resetTextColor();
                 } else if (sellChoice == 3) {
                     if (cart.getTotal() > 0) {
                         cart.printReceipt();
+                        // Get current date
+                        char currentDate[11];
+                        time_t now = time(0);
+                        strftime(currentDate, sizeof(currentDate), "%Y-%m-%d", localtime(&now));
+                        // Record transaction
+                        Transaction::recordTransaction(cart, currentDate);
                         // Update stock
                         for (const CartItem& item : cart.getItems()) {
                             pharmacy.updateMedicineQuantity(item.medicine.getName(), 
@@ -177,6 +185,11 @@ resetTextColor();
                         cout << "Cart is empty!\n";
                     }
                 } else if (sellChoice == 4) {
+                    Transaction::displayTransactionHistory();
+                    cout << "\nPress Enter to continue...";
+                    cin.ignore();
+                    cin.get();
+                } else if (sellChoice == 5) {
                     break;
                 } else {
                     cout << "Invalid choice. Please try again.\n";
