@@ -1,3 +1,4 @@
+#include "supplier_ranks.h"
 #include "pharmacy.h"
 #include "cart.h"
 #include "transaction.h"
@@ -9,6 +10,7 @@ int main() {
     Pharmacy pharmacy;
     pharmacy.loadData("medicine_data.txt");
     Cart cart;
+    SupplierRanking supplierRanking;
 
     int mainChoice;
 
@@ -24,7 +26,8 @@ resetTextColor();
         cout << "2. Manage Stock\n";
         cout << "3. Sell Medicine\n";
         cout << "4. View Notifications (" << pharmacy.countPendingNotifications() << ")\n";
-        cout << "5. Exit\n";
+        cout << "5. Supplier Rankings\n";
+        cout << "6. Exit\n";
         cout << "Enter your choice: ";
         cin >> mainChoice;
 
@@ -239,6 +242,8 @@ resetTextColor();
             pharmacy.checkAndDisplayNotifications();
             cin.ignore(); // Clear any remaining newline characters
         } else if (mainChoice == 5) {
+            supplierRanking.displayRanking();
+        } else if (mainChoice == 6) {
             cout << "Thank you for using PHARMASYNC\n";
             break;
         } else {
