@@ -39,12 +39,15 @@ void Medicine::display() {
     char priceStr[10];
     sprintf(priceStr, "%.2f", price);
     padString(priceStr, 8);
+
     intToStr(quantity, quantityStr, 8);
+    
     char expiryDatePad[15];
     myStrcpy(expiryDatePad, expiryDate);
     padString(expiryDatePad, 12);
     bool isNearExp = DateUtility::isNearExpiry(expiryDate);
     bool isLowStock = quantity <= 15;
+
     
     cout << "| ";
     if (isNearExp) {
